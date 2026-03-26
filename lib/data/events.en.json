@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "title": "Navathon 2026: Youth Innovation for Community Impact",
+    "description": "Join youth leaders, educators, and partners for a collaborative innovation event focused on building practical solutions for child protection, education access, and community resilience.",
+    "image": "/image/herosection.png",
+    "date": "18 April 2026",
+    "location": "Phnom Penh, Cambodia",
+    "ctaLabel": "Learn More",
+    "ctaHref": "#contact"
+  },
+  {
+    "id": 2,
+    "title": "Digital Skills Workshop Series",
+    "description": "A hands-on training series to help young participants strengthen digital, teamwork, and problem-solving skills through real community challenges.",
+    "image": "/image/herosection.png",
+    "date": "May 2026",
+    "location": "Hybrid",
+    "ctaLabel": "View Schedule",
+    "ctaHref": "#projects"
+  }
+]

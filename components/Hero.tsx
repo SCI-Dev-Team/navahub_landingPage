@@ -4,6 +4,8 @@ import { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { useI18n } from "@/components/I18nProvider";
 import { HiChevronDoubleDown } from "react-icons/hi2";
+import { getEventAnnouncements } from "@/lib/events";
+import EventsAnnouncementCarousel from "@/components/EventsAnnouncementCarousel";
 
 function CountUp({ target, duration = 2000 }: { target: number; duration?: number }) {
   const [count, setCount] = useState(0);
@@ -26,26 +28,14 @@ function CountUp({ target, duration = 2000 }: { target: number; duration?: numbe
 }
 
 export default function Hero() {
-  const [wordIndex, setWordIndex] = useState(0);
   const { locale, t } = useI18n();
-  const rotatingWords =
-    locale === "km"
-      ? ["កម្ពុជា", "កុមារ", "អនាគត"]
-      : ["Cambodia.", "Children.", "the Future."];
-  const heroImageUrl = "/image/herosection.png";
+  const events = getEventAnnouncements(locale);
   const stats = [
     { value: 120, suffix: "+", label: t("hero.stat.programs") },
     { value: 8000, suffix: "+", label: t("hero.stat.participants"), display: "8K+" },
     { value: 45, suffix: "+", label: t("hero.stat.communities") },
     { value: 24, suffix: "", label: t("hero.stat.provinces") },
   ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setWordIndex((i) => (i + 1) % rotatingWords.length);
-    }, 2200);
-    return () => clearInterval(interval);
-  }, [rotatingWords.length]);
 
   const scrollToProjects = () => {
     const el = document.getElementById("projects");
@@ -86,28 +76,24 @@ export default function Hero() {
               className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight mb-4"
             >
               {t("hero.title.line1")}
-              <br />
             </motion.h1>
 
-            {/* Rotating word */}
-            <div className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-6 h-16 flex items-center overflow-hidden">
-              <motion.span
-                key={wordIndex}
-                initial={{ y: 60, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -60, opacity: 0 }}
-                transition={{ duration: 0.45, ease: "easeOut" }}
-                className="text-red-600"
-              >
-                Build for {rotatingWords[wordIndex]}
-              </motion.span>
-            </div>
+            {/* What is Navahub? */}
+            <motion.h2
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-sm sm:text-base font-semibold tracking-widest uppercase text-[#CC0000] flex items-center gap-3 mb-5"
+            >
+              <span className="w-2.5 h-2.5 rounded-full bg-[#CC0000]" aria-hidden="true" />
+              {t("hero.whatIs")}
+            </motion.h2>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-lg sm:text-xl text-gray-600 mb-10 max-w-2xl leading-relaxed"
+              className="text-base sm:text-lg text-gray-700 mb-10 max-w-2xl leading-relaxed"
             >
               {t("hero.subtitle")}
             </motion.p>
@@ -140,13 +126,14 @@ export default function Hero() {
               ))}
             </motion.div>
           </div>
-            <div className="relative h-[500px] sm:h-[560px] lg:h-[640px] overflow-hidden shadow-2xl">
-              <div
-                className="absolute inset-0 animate-hero-zoom bg-cover bg-center"
-                style={{ backgroundImage: `url('${heroImageUrl}')` }}
-              />
-
-            </div>
+          <motion.aside
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="relative"
+          >
+            <EventsAnnouncementCarousel key={locale} events={events} t={t} />
+          </motion.aside>
 
         </div>
 

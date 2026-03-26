@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import { HiMapPin } from "react-icons/hi2";
-import { projects } from "@/lib/projects";
+import { useI18n } from "@/components/I18nProvider";
+import { getProjects } from "@/lib/projects";
 
 const projectImageById: Record<number, string> = {
   1: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=80",
@@ -35,6 +36,9 @@ const rowItem: Variants = {
 };
 
 export default function ProjectRows() {
+  const { locale, t } = useI18n();
+  const projects = getProjects(locale);
+
   return (
     <section id="projects" className="mt-24 py-20 px-4 sm:px-6 lg:px-8 bg-[#CC0000]">
       <div className="w-full">
@@ -45,8 +49,8 @@ export default function ProjectRows() {
           transition={{ duration: 0.45 }}
           className="mb-8"
         >
-          <h2 className="text-3xl font-bold text-white mb-2">Save the Children Community Projects</h2>
-          <p className="text-white/80">Programs focused on children, families, and resilient local communities.</p>
+          <h2 className="text-3xl font-bold text-white mb-2">{t("projects.heading")}</h2>
+          <p className="text-white/80">{t("projects.subtitle")}</p>
         </motion.div>
 
         <motion.div

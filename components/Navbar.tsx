@@ -10,18 +10,14 @@ import { useI18n } from "@/components/I18nProvider";
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled]  = useState(false);
-  const [activeHash, setActiveHash] = useState(() =>
-    typeof window === "undefined" ? "" : window.location.hash
-  );
+  const [activeHash, setActiveHash] = useState("");
   const pathname = usePathname();
   const { locale, setLocale, t } = useI18n();
   const isHome = pathname === "/";
   const isTransparent = isHome && !scrolled;
-  const currentHash =
-    typeof window === "undefined" ? activeHash : window.location.hash;
   const homeActiveRoute = isHome
-    ? currentHash && currentHash.startsWith("#")
-      ? currentHash
+    ? activeHash && activeHash.startsWith("#")
+      ? activeHash
       : "/"
     : pathname;
   const navLinks = [

@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Moul&family=Noto+Serif+Khmer:wght@100..900&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -21,6 +22,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+}
+
+html.locale-km body {
+  font-family: "Noto Serif Khmer", "Moul", var(--font-lato), "Segoe UI", sans-serif;
 }
 
 @keyframes blob {

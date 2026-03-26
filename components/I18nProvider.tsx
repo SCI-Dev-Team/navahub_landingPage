@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from "react";
 import { defaultLocale, dictionaries, type Locale } from "@/lib/i18n";
 
 type I18nContextValue = {
@@ -20,6 +27,11 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     window.localStorage.setItem("navahub-locale", locale);
+  }, [locale]);
+
+  useLayoutEffect(() => {
+    document.documentElement.lang = locale === "km" ? "km" : "en";
+    document.documentElement.classList.toggle("locale-km", locale === "km");
   }, [locale]);
 
   const value = useMemo<I18nContextValue>(
