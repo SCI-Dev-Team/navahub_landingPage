@@ -19,11 +19,17 @@ type I18nContextValue = {
 const I18nContext = createContext<I18nContextValue | null>(null);
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocale] = useState<Locale>(() => {
-    if (typeof window === "undefined") return defaultLocale;
+  const [locale, setLocale] = useState<Locale>(defaultLocale);
+
+  useEffect(() => {
     const saved = window.localStorage.getItem("navahub-locale");
-    return saved === "en" || saved === "km" ? saved : defaultLocale;
-  });
+    if (saved === "en" || saved === "km") {
+      const timer = window.setTimeout(() => {
+        setLocale(saved);
+      }, 0);
+      return () => window.clearTimeout(timer);
+    }
+  }, []);
 
   useEffect(() => {
     window.localStorage.setItem("navahub-locale", locale);

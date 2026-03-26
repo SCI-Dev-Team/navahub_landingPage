@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "day": "12",
+    "month": "APR",
+    "year": "២០២៦",
+    "title": "Navathon: ដំណោះស្រាយទឹកស្អាត",
+    "type": "Navathon",
+    "typeColor": "text-[#CC0000] bg-red-50",
+    "location": "ភ្នំពេញ + អនឡាញ",
+    "spots": "នៅសល់ 48 កៅអី",
+    "spotsUrgent": true,
+    "image": "https://images.unsplash.com/photo-1520975682031-a4a9c7aef2d5?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    "id": 2,
+    "day": "21",
+    "month": "APR",
+    "year": "២០២៦",
+    "title": "បណ្តុះបណ្តាលសម្រាប់ការឆ្លើយតបមនុស្សធម៌",
+    "type": "Training",
+    "typeColor": "text-[#CC0000] bg-red-50",
+    "location": "ភ្នំពេញ, កម្ពុជា",
+    "spots": "នៅសល់ 12 កៅអី",
+    "spotsUrgent": true,
+    "image": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    "id": 3,
+    "day": "05",
+    "month": "APR",
+    "year": "២០២៦",
+    "title": "Design Thinking សម្រាប់ផលប្រយោជន៍សង្គម",
+    "type": "Workshop",
+    "typeColor": "text-[#CC0000] bg-red-50",
+    "location": "កំពង់ចាម, កម្ពុជា",
+    "spots": "ចូលរួមបាន",
+    "spotsUrgent": false,
+    "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    "id": 4,
+    "day": "02",
+    "month": "MAY",
+    "year": "២០២۶",
+    "title": "Navathon: Hack ទៅលើការទទួលបានការអប់រំ",
+    "type": "Navathon",
+    "typeColor": "text-[#CC0000] bg-red-50",
+    "location": "សៀមរាប, កម្ពុជា",
+    "spots": "នៅសល់ 30 កៅអី",
+    "spotsUrgent": false,
+    "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    "id": 5,
+    "day": "10",
+    "month": "MAY",
+    "year": "២០២៦",
+    "title": "Navathon: បច្ចេកវិទ្យាសម្រាប់សុវត្ថិភាពកុមារ",
+    "type": "Navathon",
+    "typeColor": "text-[#CC0000] bg-red-50",
+    "location": "បន្ទាយមានជ័យ, កម្ពុជា",
+    "spots": "បើកការចុះឈ្មោះ",
+    "spotsUrgent": false,
+    "image": "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=80"
+  }
+]

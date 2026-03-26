@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
-import { HiMapPin } from "react-icons/hi2";
+import { HiMapPin, HiArrowRight } from "react-icons/hi2";
 import { useI18n } from "@/components/I18nProvider";
 import { getProjects } from "@/lib/projects";
 
@@ -40,7 +40,7 @@ export default function ProjectRows() {
   const projects = getProjects(locale);
 
   return (
-    <section id="projects" className="mt-24 py-20 px-4 sm:px-6 lg:px-8 bg-[#CC0000]">
+    <section id="projects" className="mt-5 py-20 px-4 sm:px-6 lg:px-8 bg-[#CC0000]">
       <div className="w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -58,17 +58,21 @@ export default function ProjectRows() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.15 }}
-          className="space-y-4"
+          className="space-y-6"
         >
-          {projects.map((project) => (
+          {projects.map((project, index) => (
             <Link
               key={project.id}
               href={`/projects/${project.id}`}
-              className="group block shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-gray-200/80"
+              className="group block transition-all duration-300 hover:-translate-y-0.5"
             >
-              <motion.article variants={rowItem} className="p-5 sm:p-6 bg-white">
-                <div className="mt-5 grid gap-5 md:grid-cols-[320px_1fr] md:gap-6">
-                  <div className="relative h-56 w-full overflow-hidden md:h-full md:min-h-[260px]">
+              <motion.article variants={rowItem} className="overflow-hidden">
+                <div className="grid md:grid-cols-2">
+                  <div
+                    className={`relative h-72 w-full overflow-hidden md:h-[360px] ${
+                      index % 2 === 1 ? "md:order-2" : ""
+                    }`}
+                  >
                     <Image
                       src={projectImageById[project.id]}
                       alt={`${project.title} project`}
@@ -77,20 +81,29 @@ export default function ProjectRows() {
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-linear-to-t from-black/30 via-black/5 to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-40" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/5 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-45" />
                   </div>
 
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-gray-900 transition-colors duration-300 group-hover:text-[#CC0000]">{project.title}</h3>
-                    <p className="text-sm text-[#CC0000] font-medium mt-1">{project.event}</p>
-                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">{project.description}</p>
+                  <div
+                    className={`flex flex-col justify-center px-6 sm:px-10 py-8 sm:py-10 ${
+                      index % 2 === 1 ? "md:order-1" : ""
+                    }`}
+                  >
+                    <p className="text-white/85 text-sm font-medium mb-2">{project.event}</p>
+                    <h3 className="text-2xl sm:text-3xl font-bold text-white leading-tight">{project.title}</h3>
+                    <p className="text-white/90 mt-4 leading-relaxed">{project.description}</p>
 
-                    <div className="mt-4 pt-4">
-                      <p className="inline-flex items-center gap-1.5 text-sm text-gray-500">
+                    <div className="mt-5">
+                      <p className="inline-flex items-center gap-1.5 text-white/80 text-sm">
                         <HiMapPin className="w-4 h-4" />
                         {project.location}
                       </p>
                     </div>
+
+                    <span className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold transition-transform duration-300 group-hover:translate-x-1">
+                      {t("projects.viewProject")}
+                      <HiArrowRight className="w-4 h-4" />
+                    </span>
                   </div>
                 </div>
               </motion.article>

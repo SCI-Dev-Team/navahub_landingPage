@@ -3,57 +3,11 @@
 import { motion } from "framer-motion";
 import { HiMapPin, HiChevronRight } from "react-icons/hi2";
 import { useI18n } from "@/components/I18nProvider";
-
-const events = [
-  {
-    id: 1, day: "12", month: "APR",
-    title: "Navathon: Clean Water Solutions",
-    type: "Navathon", typeColor: "text-[#CC0000] bg-red-50",
-    location: "Phnom Penh + Online",
-    spots: "48 spots left", spotsUrgent: true,
-    image:
-      "https://images.unsplash.com/photo-1520975682031-a4a9c7aef2d5?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    id: 2, day: "21", month: "APR",
-    title: "Tech for Humanitarian Response",
-    type: "Training", typeColor: "text-[#CC0000] bg-red-50",
-    location: "Phnom Penh, Cambodia",
-    spots: "12 spots left", spotsUrgent: true,
-    image:
-      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    id: 3, day: "05", month: "APR",
-    title: "Design Thinking for Social Good",
-    type: "Workshop", typeColor: "text-[#CC0000] bg-red-50",
-    location: "Kampong Cham, Cambodia",
-    spots: "Unlimited", spotsUrgent: false,
-    image:
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    id: 4, day: "02", month: "MAY",
-    title: "Navathon: Education Access Hack",
-    type: "Navathon", typeColor: "text-[#CC0000] bg-red-50",
-    location: "Siem Reap, Cambodia",
-    spots: "30 spots left", spotsUrgent: false,
-    image:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    id: 5, day: "10", month: "MAY",
-    title: "Navathon: Child Safety Tech",
-    type: "Navathon", typeColor: "text-[#CC0000] bg-red-50",
-    location: "Banteay Meanchey, Cambodia",
-    spots: "Open registration", spotsUrgent: false,
-    image:
-      "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=80",
-  },
-];
+import { getUpcomingEvents } from "@/lib/upcomingEvents";
 
 export default function UpcomingEvents() {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
+  const events = getUpcomingEvents(locale);
 
   return (
     <section id="upcoming" className="py-20 px-4 sm:px-6 bg-[#f9f6f6]">
@@ -120,7 +74,7 @@ export default function UpcomingEvents() {
                     <span className="w-1.5 h-1.5 rounded-full bg-[#CC0000] inline-block" />
                   </span>
                   <span className="text-black/70">Deadline:</span>
-                  <span className="text-black">{event.day} {event.month}</span>
+                  <span className="text-black">{event.day} {event.month} {event.year}</span>
                 </p>
 
                 <p className="text-xs text-black/80 mt-2 flex items-center gap-1">

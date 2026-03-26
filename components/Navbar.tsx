@@ -22,6 +22,10 @@ export default function Navbar() {
     : pathname;
   const navLinks = [
     { label: t("nav.home"), href: "/" },
+    {
+      label: t("hero.eventsAnnouncement"),
+      href: isHome ? "#events-announcement" : "/#events-announcement",
+    },
     { label: t("nav.projects"), href: isHome ? "#projects" : "/projects" },
     { label: t("nav.about"), href: isHome ? "#about" : "/about" },
     { label: t("nav.contact"), href: isHome ? "#contact" : "/contact" },
@@ -39,6 +43,53 @@ export default function Navbar() {
     window.addEventListener("hashchange", sync);
     return () => window.removeEventListener("hashchange", sync);
   }, []);
+
+  useEffect(() => {
+    if (!isHome) return;
+
+    const idToHash: Record<string, `#${string}`> = {
+      "events-announcement": "#events-announcement",
+      projects: "#projects",
+      about: "#about",
+      contact: "#contact",
+    };
+
+    const sectionIds = Object.keys(idToHash);
+
+    const pickByScrollPosition = () => {
+      // Consider a section "active" when its top is above the navbar area.
+      const scrollPos = window.scrollY + 110;
+      let currentId: string | null = null;
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (el.offsetTop <= scrollPos) currentId = id;
+      }
+
+      setActiveHash(currentId ? idToHash[currentId] : "");
+    };
+
+    pickByScrollPosition();
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        pickByScrollPosition();
+        ticking = false;
+      });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", pickByScrollPosition);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", pickByScrollPosition);
+    };
+  }, [isHome]);
 
   const scrollToHash = (hash: string) => {
     if (!hash.startsWith("#")) return;

@@ -4,8 +4,6 @@ import { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { useI18n } from "@/components/I18nProvider";
 import { HiChevronDoubleDown } from "react-icons/hi2";
-import { getEventAnnouncements } from "@/lib/events";
-import EventsAnnouncementCarousel from "@/components/EventsAnnouncementCarousel";
 
 function CountUp({ target, duration = 2000 }: { target: number; duration?: number }) {
   const [count, setCount] = useState(0);
@@ -28,8 +26,8 @@ function CountUp({ target, duration = 2000 }: { target: number; duration?: numbe
 }
 
 export default function Hero() {
-  const { locale, t } = useI18n();
-  const events = getEventAnnouncements(locale);
+  const { t } = useI18n();
+  const heroImageUrl = "/image/herosection.png";
   const stats = [
     { value: 120, suffix: "+", label: t("hero.stat.programs") },
     { value: 8000, suffix: "+", label: t("hero.stat.participants"), display: "8K+" },
@@ -47,7 +45,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative pt-24 pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white min-h-[92vh]">
+    <section className="relative pt-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white min-h-[92vh]">
       {/* Soft background gradients (not the photo) */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute " />
@@ -130,9 +128,12 @@ export default function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.25 }}
-            className="relative"
+            className="relative h-[500px] sm:h-[560px] lg:h-[640px] overflow-hidden shadow-2xl"
           >
-            <EventsAnnouncementCarousel key={locale} events={events} t={t} />
+            <div
+              className="absolute inset-0 animate-hero-zoom bg-cover bg-center"
+              style={{ backgroundImage: `url('${heroImageUrl}')` }}
+            />
           </motion.aside>
 
         </div>
