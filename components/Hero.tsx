@@ -5,12 +5,15 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useI18n } from "@/components/I18nProvider";
 import type { EventAnnouncement } from "@/lib/events";
+import type { UpcomingEvent } from "@/lib/upcomingEvents";
 import { fetchContent } from "@/lib/contentApi";
 import EventsAnnouncementCarousel from "@/components/EventsAnnouncementCarousel";
+import UpcomingEventsTimeline from "@/components/UpcomingEventsTimeline";
 
 export default function Hero() {
   const { locale, t } = useI18n();
   const [announcementEvents, setAnnouncementEvents] = useState<EventAnnouncement[]>([]);
+  const [upcomingEvents, setUpcomingEvents] = useState<UpcomingEvent[]>([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -19,10 +22,12 @@ export default function Hero() {
       .then((data) => {
         if (!isMounted) return;
         setAnnouncementEvents(data.events);
+        setUpcomingEvents(data.upcomingEvents);
       })
       .catch(() => {
         if (!isMounted) return;
         setAnnouncementEvents([]);
+        setUpcomingEvents([]);
       });
 
     return () => {
@@ -126,6 +131,7 @@ export default function Hero() {
           transition={{ duration: 0.55, delay: 0.3 }}
         >
           <EventsAnnouncementCarousel key={locale} events={announcementEvents} t={t} />
+          <UpcomingEventsTimeline events={upcomingEvents} />
         </motion.div>
       </div>
     </section>
