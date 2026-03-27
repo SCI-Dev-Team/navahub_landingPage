@@ -1,160 +1,81 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { useI18n } from "@/components/I18nProvider";
-import { HiChevronDoubleDown } from "react-icons/hi2";
-
-function CountUp({ target, duration = 2000 }: { target: number; duration?: number }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
-
-  useEffect(() => {
-    if (!inView) return;
-    let start = 0;
-    const step = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) { setCount(target); clearInterval(timer); }
-      else setCount(Math.floor(start));
-    }, 16);
-    return () => clearInterval(timer);
-  }, [inView, target, duration]);
-
-  return <span ref={ref}>{count}</span>;
-}
+import type { EventAnnouncement } from "@/lib/events";
+import { fetchContent } from "@/lib/contentApi";
+import EventsAnnouncementCarousel from "@/components/EventsAnnouncementCarousel";
 
 export default function Hero() {
-  const { t } = useI18n();
-  const heroImageUrl = "/image/herosection.png";
-  const stats = [
-    { value: 120, suffix: "+", label: t("hero.stat.programs") },
-    { value: 8000, suffix: "+", label: t("hero.stat.participants"), display: "8K+" },
-    { value: 45, suffix: "+", label: t("hero.stat.communities") },
-    { value: 24, suffix: "", label: t("hero.stat.provinces") },
-  ];
+  const { locale, t } = useI18n();
+  const [announcementEvents, setAnnouncementEvents] = useState<EventAnnouncement[]>([]);
 
-  const scrollToProjects = () => {
-    const el = document.getElementById("projects");
-    if (!el) return;
+  useEffect(() => {
+    let isMounted = true;
 
-    const navOffset = 72;
-    const top = el.getBoundingClientRect().top + window.scrollY - navOffset + 10;
-    window.scrollTo({ top, behavior: "smooth" });
-  };
+    fetchContent(locale)
+      .then((data) => {
+        if (!isMounted) return;
+        setAnnouncementEvents(data.events);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setAnnouncementEvents([]);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [locale]);
 
   return (
-    <section className="relative pt-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white min-h-[92vh]">
-      {/* Soft background gradients (not the photo) */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute " />
-      </div>
-
-      <div className="relative max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-          <div>
-
-            {/* Badge */}
+    <section id="events-announcement" className="bg-[#f8f8f8] px-4 pb-16 pt-20 sm:px-6 sm:pt-24 lg:px-8 lg:pt-20">
+      <div className="mx-auto max-w-7xl">
+        <div className="overflow-hidden border border-slate-200 bg-white shadow-[0_14px_34px_rgba(15,23,42,0.07)]">
+          <div className="p-6 sm:p-8 lg:p-10">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#CC0000]/10 text-[#CC0000] text-sm font-semibold mb-6 border border-[#CC0000]/20"
+              transition={{ duration: 0.45 }}
+              className="mb-5 inline-flex items-center gap-2 rounded-full bg-[#CC0000]/10 px-4 py-2 text-sm font-semibold text-[#CC0000]"
             >
-              <span className="w-2 h-2 rounded-full" />
+              <span className="h-2 w-2 rounded-full bg-[#CC0000]" />
               {t("hero.badge")}
             </motion.div>
 
-            {/* Headline */}
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight mb-4"
+              transition={{ duration: 0.5, delay: 0.05 }}
+              className="max-w-4xl text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-[58px]"
             >
               {t("hero.title.line1")}
             </motion.h1>
 
-            {/* What is Navahub? */}
-            <motion.h2
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.12 }}
+              className="mt-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#CC0000]"
+            >
+              <span className="h-2 w-2 rounded-full bg-[#CC0000]" />
+              {t("hero.whatIs")}
+            </motion.p>
+
+            <motion.p
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-sm sm:text-base font-semibold tracking-widest uppercase text-[#CC0000] flex items-center gap-3 mb-5"
-            >
-              <span className="w-2.5 h-2.5 rounded-full bg-[#CC0000]" aria-hidden="true" />
-              {t("hero.whatIs")}
-            </motion.h2>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-base sm:text-lg text-gray-700 mb-10 max-w-2xl leading-relaxed"
+              className="mt-4 max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg"
             >
               {t("hero.subtitle")}
             </motion.p>
-
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.55 }}
-              className="grid grid-cols-2 sm:grid-cols-4 gap-6"
-            >
-              {stats.map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  whileHover={{ scale: 1.05 }}
-                  className="bg-white/85 backdrop-blur-lg rounded-2xl p-4 shadow-sm border border-gray-100"
-                >
-                  <p className="text-3xl font-bold text-gray-900">
-                    {stat.display ? (
-                      stat.display
-                    ) : (
-                      <>
-                        <CountUp target={stat.value} duration={1800 + i * 200} />
-                        {stat.suffix}
-                      </>
-                    )}
-                  </p>
-                  <p className="text-sm text-gray-600 mt-0.5">{stat.label}</p>
-                </motion.div>
-              ))}
-            </motion.div>
           </div>
-          <motion.aside
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            className="relative h-[500px] sm:h-[560px] lg:h-[640px] overflow-hidden shadow-2xl"
-          >
-            <div
-              className="absolute inset-0 animate-hero-zoom bg-cover bg-center"
-              style={{ backgroundImage: `url('${heroImageUrl}')` }}
-            />
-          </motion.aside>
 
-        </div>
-
-        {/* Scroll down indicator (center of hero) */}
-        <div className="absolute left-1/2 bottom-[-30%] -translate-x-1/2 pointer-events-none">
-          <motion.button
-            type="button"
-            onClick={scrollToProjects}
-            whileHover={{ scale: 1.06 }}
-            whileTap={{ scale: 0.97 }}
-            className="pointer-events-auto inline-flex items-center justify-center w-14 h-14 rounded-full bg-[#CC0000]/10 border border-[#CC0000]/20 hover:bg-[#CC0000]/15 transition-colors"
-            aria-label={t("hero.scroll")}
-          >
-            <motion.span
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 1.35, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <HiChevronDoubleDown className="w-7 h-7 text-[#CC0000]" />
-            </motion.span>
-          </motion.button>
+          <div className="border-t border-slate-200 bg-[#f3f4f6] p-3 sm:p-4">
+            <EventsAnnouncementCarousel key={locale} events={announcementEvents} t={t} />
+          </div>
         </div>
       </div>
     </section>

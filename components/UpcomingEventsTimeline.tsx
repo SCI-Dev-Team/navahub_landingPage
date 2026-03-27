@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useI18n } from "@/components/I18nProvider";
 import type { UpcomingEvent } from "@/lib/upcomingEvents";
+import { upcomingDisplayParts } from "@/lib/datetime";
 
 function roman(n: number) {
   const map: Record<number, string> = {
@@ -41,46 +42,49 @@ export default function UpcomingEventsTimeline({
       </div>
 
       <ol className="space-y-6 sm:space-y-8">
-        {events.map((event, idx) => (
-          <motion.li
-            key={event.id}
-            className="flex gap-5 items-center"
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.4, delay: idx * 0.03 }}
-          >
-            <div className="w-10 h-10 rounded-full bg-[#CC0000] flex items-center justify-center shrink-0">
-              <span className="text-sm font-extrabold text-white">{roman(idx + 1)}</span>
-            </div>
+        {events.map((event, idx) => {
+          const { day, month, year } = upcomingDisplayParts(event);
+          return (
+            <motion.li
+              key={event.id}
+              className="flex gap-5 items-center"
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 0.4, delay: idx * 0.03 }}
+            >
+              <div className="w-10 h-10 rounded-full bg-[#CC0000] flex items-center justify-center shrink-0">
+                <span className="text-sm font-extrabold text-white">{roman(idx + 1)}</span>
+              </div>
 
-            <div className="flex-1">
-              <div className=" bg-[#CC0000] shadow-sm px-5 py-4 transition-all hover:shadow-lg">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                  {/* Date badge */}
-                  <div className="w-20 sm:w-24 rounded-xl bg-white px-3 py-2 text-center shrink-0 border border-[#CC0000]/20">
-                    <div className="text-xl font-extrabold text-[#CC0000] leading-none">
-                      {event.day}
+              <div className="flex-1">
+                <div className=" bg-[#CC0000] shadow-sm px-5 py-4 transition-all hover:shadow-lg">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                    {/* Date badge */}
+                    <div className="w-20 sm:w-24 rounded-xl bg-white px-3 py-2 text-center shrink-0 border border-[#CC0000]/20">
+                      <div className="text-xl font-extrabold text-[#CC0000] leading-none">
+                        {day}
+                      </div>
+                      <div className="text-xs font-semibold text-[#CC0000] mt-1">
+                        {month}
+                      </div>
+                      <div className="text-[10px] sm:text-[11px] font-medium text-[#CC0000]/80 mt-1">
+                        {year}
+                      </div>
                     </div>
-                    <div className="text-xs font-semibold text-[#CC0000] mt-1">
-                      {event.month}
-                    </div>
-                    <div className="text-[10px] sm:text-[11px] font-medium text-[#CC0000]/80 mt-1">
-                      {event.year}
-                    </div>
-                  </div>
 
-                  {/* Title */}
-                  <div className="flex-1 flex items-center">
-                    <div className="w-full text-center text-base sm:text-lg font-bold text-white leading-snug">
-                      {event.title}
+                    {/* Title */}
+                    <div className="flex-1 flex items-center">
+                      <div className="w-full text-center text-base sm:text-lg font-bold text-white leading-snug">
+                        {event.title}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </motion.li>
-        ))}
+            </motion.li>
+          );
+        })}
       </ol>
     </div>
   );

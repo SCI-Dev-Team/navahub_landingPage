@@ -1,15 +1,37 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useI18n } from "@/components/I18nProvider";
-import { getEventAnnouncements } from "@/lib/events";
+import type { EventAnnouncement } from "@/lib/events";
 import EventsAnnouncementCarousel from "@/components/EventsAnnouncementCarousel";
-import { getUpcomingEvents } from "@/lib/upcomingEvents";
+import type { UpcomingEvent } from "@/lib/upcomingEvents";
 import UpcomingEventsTimeline from "@/components/UpcomingEventsTimeline";
+import { fetchContent } from "@/lib/contentApi";
 
 export default function EventsAnnouncementSection() {
   const { locale, t } = useI18n();
-  const announcementEvents = getEventAnnouncements(locale);
-  const upcomingEvents = getUpcomingEvents(locale);
+  const [announcementEvents, setAnnouncementEvents] = useState<EventAnnouncement[]>([]);
+  const [upcomingEvents, setUpcomingEvents] = useState<UpcomingEvent[]>([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    fetchContent(locale)
+      .then((data) => {
+        if (!isMounted) return;
+        setAnnouncementEvents(data.events);
+        setUpcomingEvents(data.upcomingEvents);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setAnnouncementEvents([]);
+        setUpcomingEvents([]);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [locale]);
 
   return (
     <section id="events-announcement" className="px-4 sm:px-6 lg:px-8 py-16 bg-white">

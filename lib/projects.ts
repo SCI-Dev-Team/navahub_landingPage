@@ -1,6 +1,4 @@
-import type { Locale } from "@/lib/i18n";
-import projectsEn from "@/lib/data/projects.en.json";
-import projectsKm from "@/lib/data/projects.km.json";
+import type { Timestamp } from "firebase/firestore";
 
 export type Project = {
   id: number;
@@ -9,27 +7,13 @@ export type Project = {
   team: string;
   members: number;
   location: string;
-  isOnline: boolean;
-  date: string;
+  isOnline?: boolean;
+  /** Firestore Timestamp (preferred); legacy string still supported in UI */
+  date?: Timestamp | string;
   tags: string[];
   description: string;
   impact: string;
   emoji: string;
+  image?: string;
+  externalLink?: string;
 };
-
-const byLocale: Record<Locale, Project[]> = {
-  en: projectsEn as Project[],
-  km: projectsKm as Project[],
-};
-
-export function getProjects(locale: Locale): Project[] {
-  return byLocale[locale] ?? byLocale.en;
-}
-
-export function getProjectById(id: number, locale: Locale): Project | undefined {
-  return getProjects(locale).find((p) => p.id === id);
-}
-
-export function getAllProjectIds(): number[] {
-  return projectsEn.map((p) => p.id);
-}

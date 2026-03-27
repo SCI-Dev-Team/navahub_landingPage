@@ -1,13 +1,34 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { HiMapPin, HiChevronRight } from "react-icons/hi2";
 import { useI18n } from "@/components/I18nProvider";
-import { getUpcomingEvents } from "@/lib/upcomingEvents";
+import { fetchContent } from "@/lib/contentApi";
+import type { UpcomingEvent } from "@/lib/upcomingEvents";
+import { upcomingDisplayParts } from "@/lib/datetime";
 
 export default function UpcomingEvents() {
   const { locale, t } = useI18n();
-  const events = getUpcomingEvents(locale);
+  const [events, setEvents] = useState<UpcomingEvent[]>([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    fetchContent(locale)
+      .then((data) => {
+        if (!isMounted) return;
+        setEvents(data.upcomingEvents);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setEvents([]);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [locale]);
 
   return (
     <section id="upcoming" className="py-20 px-4 sm:px-6 bg-[#f9f6f6]">
@@ -35,7 +56,9 @@ export default function UpcomingEvents() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event, i) => (
+          {events.map((event, i) => {
+            const { day, month, year } = upcomingDisplayParts(event);
+            return (
             <motion.div
               key={event.id}
               initial={{ opacity: 0, x: -40 }}
@@ -48,7 +71,7 @@ export default function UpcomingEvents() {
               {/* Image */}
               <div className="relative h-48 sm:h-56 overflow-hidden bg-gray-50">
                 <img
-                  src={event.image}
+                  src={event.image ?? ""}
                   alt={event.title}
                   loading="lazy"
                   className="block w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.02]"
@@ -74,7 +97,9 @@ export default function UpcomingEvents() {
                     <span className="w-1.5 h-1.5 rounded-full bg-[#CC0000] inline-block" />
                   </span>
                   <span className="text-black/70">Deadline:</span>
-                  <span className="text-black">{event.day} {event.month} {event.year}</span>
+                  <span className="text-black">
+                    {day} {month} {year}
+                  </span>
                 </p>
 
                 <p className="text-xs text-black/80 mt-2 flex items-center gap-1">
@@ -93,7 +118,8 @@ export default function UpcomingEvents() {
                 </div>
               </div>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

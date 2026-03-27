@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { I18nProvider } from "@/components/I18nProvider";
+import SiteChrome from "@/components/SiteChrome";
 
 const lato = localFont({
   variable: "--font-lato",
@@ -35,9 +34,7 @@ export default function RootLayout({
     <html lang="en" className={`${lato.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-gray-900">
         <I18nProvider>
-          <Navbar />
-          <div className="flex-1">{children}</div>
-          <Footer />
+          <SiteChrome>{children}</SiteChrome>
         </I18nProvider>
       </body>
     </html>
