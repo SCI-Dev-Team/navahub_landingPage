@@ -4,12 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { HiEnvelope, HiMapPin, HiPhone, HiPaperAirplane } from "react-icons/hi2";
 import { FaFacebook, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
-
-const contactInfo = [
-  { icon: <HiEnvelope className="w-5 h-5" />, label: "Email", value: "cambodia@navahub.org" },
-  { icon: <HiPhone className="w-5 h-5" />, label: "Phone", value: "+855 12 345 678" },
-  { icon: <HiMapPin className="w-5 h-5" />, label: "Address", value: "Phnom Penh, Cambodia" },
-];
+import { useI18n } from "@/components/I18nProvider";
 
 const socials = [
   { icon: <FaXTwitter />, label: "X (Twitter)", href: "#" },
@@ -18,28 +13,25 @@ const socials = [
   { icon: <FaInstagram />, label: "Instagram", href: "#" },
 ];
 
-const faqs = [
-  {
-    q: "What is a Navathon?",
-    a: "A Navathon is a hackathon organized by Save the Children focused on building tech solutions for real community challenges.",
-  },
-  {
-    q: "Do I need coding experience?",
-    a: "Not at all! We welcome designers, problem-solvers, community workers, and domain experts just as much as developers.",
-  },
-  {
-    q: "Are Navathons free to join?",
-    a: "Yes — all Navathons are completely free for participants. Some in-person events may provide meals and accommodation too.",
-  },
-  {
-    q: "Can I organize a Navathon?",
-    a: "Absolutely. Fill out the contact form with 'Organize a Navathon' as your subject and our team will be in touch.",
-  },
-];
-
 export default function ContactSection() {
+  const { t } = useI18n();
   const [submitted, setSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const contactInfo = [
+    { icon: <HiEnvelope className="w-5 h-5" />, label: t("contact.info.email"), value: "cambodia@navahub.org" },
+    { icon: <HiPhone className="w-5 h-5" />, label: t("contact.info.phone"), value: "+855 12 345 678" },
+    {
+      icon: <HiMapPin className="w-5 h-5" />,
+      label: t("contact.info.address"),
+      value: t("contact.info.addressValue"),
+    },
+  ];
+  const faqs = [
+    { q: t("contact.faq.q1"), a: t("contact.faq.a1") },
+    { q: t("contact.faq.q2"), a: t("contact.faq.a2") },
+    { q: t("contact.faq.q3"), a: t("contact.faq.a3") },
+    { q: t("contact.faq.q4"), a: t("contact.faq.a4") },
+  ];
 
   return (
     <>
@@ -59,7 +51,7 @@ export default function ContactSection() {
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-100 text-[#CC0000] text-sm font-medium mb-5"
           >
             <span className="w-2 h-2 rounded-full bg-[#CC0000] animate-pulse" />
-            Cambodia Support & Partnerships
+            {t("contact.hero.badge")}
           </motion.div>
 
           <motion.h1
@@ -68,7 +60,7 @@ export default function ContactSection() {
             transition={{ delay: 0.1 }}
             className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4"
           >
-            Get in <span className="text-[#CC0000]">Touch Cambodia</span>
+            {t("contact.hero.title.before")} <span className="text-[#CC0000]">{t("contact.hero.title.accent")}</span>
           </motion.h1>
 
           <motion.p
@@ -77,7 +69,7 @@ export default function ContactSection() {
             transition={{ delay: 0.2 }}
             className="text-lg text-gray-500"
           >
-            Whether you want to join, organize, sponsor, or support programs in Cambodia, we&apos;re here to help.
+            {t("contact.hero.subtitle")}
           </motion.p>
         </div>
       </section>
@@ -94,7 +86,7 @@ export default function ContactSection() {
             className="lg:col-span-2 space-y-8"
           >
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Cambodia Contact Details</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">{t("contact.details.heading")}</h2>
               <div className="space-y-4">
                 {contactInfo.map((c) => (
                   <div key={c.label} className="flex items-center gap-3">
@@ -111,7 +103,7 @@ export default function ContactSection() {
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold text-gray-700 mb-3">Follow us</h3>
+              <h3 className="text-sm font-semibold text-gray-700 mb-3">{t("contact.follow")}</h3>
               <div className="flex gap-3">
                 {socials.map(({ icon, label, href }) => (
                   <motion.a
@@ -136,7 +128,7 @@ export default function ContactSection() {
             >
               <div className="text-center">
                 <span className="text-4xl">🗺️</span>
-                <p className="text-sm text-gray-500 mt-2">Phnom Penh, Cambodia Office</p>
+                <p className="text-sm text-gray-500 mt-2">{t("contact.map.office")}</p>
               </div>
             </motion.div>
           </motion.div>
@@ -162,9 +154,9 @@ export default function ContactSection() {
                 >
                   <span className="text-3xl">🎉</span>
                 </motion.div>
-                <h3 className="text-xl font-bold text-gray-900">Message Sent!</h3>
+                <h3 className="text-xl font-bold text-gray-900">{t("contact.success.title")}</h3>
                 <p className="text-gray-500 text-sm max-w-xs">
-                  Thank you for reaching out. Our team will get back to you within 1–2 business days.
+                  {t("contact.success.body")}
                 </p>
                 <motion.button
                   whileHover={{ scale: 1.04 }}
@@ -172,12 +164,12 @@ export default function ContactSection() {
                   onClick={() => setSubmitted(false)}
                   className="mt-2 px-5 py-2.5 rounded-xl bg-[#CC0000] text-white text-sm font-semibold"
                 >
-                  Send another message
+                  {t("contact.success.cta")}
                 </motion.button>
               </motion.div>
             ) : (
               <>
-                <h2 className="text-xl font-bold text-gray-900 mb-6">Send a Message</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-6">{t("contact.form.title")}</h2>
                 <form
                   className="space-y-4"
                   onSubmit={(e) => {
@@ -187,7 +179,7 @@ export default function ContactSection() {
                 >
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1.5">First Name</label>
+                      <label className="block text-xs font-medium text-gray-600 mb-1.5">{t("contact.form.firstName")}</label>
                       <input
                         required
                         type="text"
@@ -196,7 +188,7 @@ export default function ContactSection() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1.5">Last Name</label>
+                      <label className="block text-xs font-medium text-gray-600 mb-1.5">{t("contact.form.lastName")}</label>
                       <input
                         required
                         type="text"
@@ -207,7 +199,7 @@ export default function ContactSection() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">Email</label>
+                    <label className="block text-xs font-medium text-gray-600 mb-1.5">{t("contact.form.email")}</label>
                     <input
                       required
                       type="email"
@@ -217,22 +209,22 @@ export default function ContactSection() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">Subject</label>
+                    <label className="block text-xs font-medium text-gray-600 mb-1.5">{t("contact.form.subject")}</label>
                     <select className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CC0000] focus:border-transparent bg-white transition-shadow">
-                      <option>Join a Navathon Cambodia</option>
-                      <option>Organize a Navathon</option>
-                      <option>Sponsor / Partner</option>
-                      <option>Media Inquiry</option>
-                      <option>Other</option>
+                      <option>{t("contact.form.subject.join")}</option>
+                      <option>{t("contact.form.subject.organize")}</option>
+                      <option>{t("contact.form.subject.sponsor")}</option>
+                      <option>{t("contact.form.subject.media")}</option>
+                      <option>{t("contact.form.subject.other")}</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1.5">Message</label>
+                    <label className="block text-xs font-medium text-gray-600 mb-1.5">{t("contact.form.message")}</label>
                     <textarea
                       required
                       rows={4}
-                      placeholder="Tell us what's on your mind..."
+                      placeholder={t("contact.form.messagePlaceholder")}
                       className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CC0000] focus:border-transparent resize-none transition-shadow"
                     />
                   </div>
@@ -244,7 +236,7 @@ export default function ContactSection() {
                     className="w-full py-3 rounded-xl bg-[#CC0000] text-white font-semibold text-sm flex items-center justify-center gap-2 hover:bg-[#aa0000] transition-colors"
                   >
                     <HiPaperAirplane className="w-4 h-4" />
-                    Send Message
+                    {t("contact.form.send")}
                   </motion.button>
                 </form>
               </>
@@ -262,7 +254,7 @@ export default function ContactSection() {
             viewport={{ once: true }}
             className="text-2xl font-bold text-gray-900 mb-8 text-center"
           >
-            Frequently Asked Questions
+            {t("contact.faq.heading")}
           </motion.h2>
           <div className="space-y-3">
             {faqs.map((faq, i) => (

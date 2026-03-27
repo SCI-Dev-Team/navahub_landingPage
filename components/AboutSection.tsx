@@ -9,52 +9,54 @@ import {
   HiShieldCheck,
   HiUsers,
 } from "react-icons/hi2";
-
-const values = [
-  {
-    icon: <HiHeart className="w-6 h-6" />,
-    title: "Community First",
-    desc: "Every decision we make is rooted in the real needs of the communities we serve.",
-  },
-  {
-    icon: <HiLightBulb className="w-6 h-6" />,
-    title: "Innovation",
-    desc: "We believe technology, in the right hands, can solve the hardest human problems.",
-  },
-  {
-    icon: <HiGlobeAlt className="w-6 h-6" />,
-    title: "Inclusivity",
-    desc: "Navathon is open to everyone — no experience required, just passion to help.",
-  },
-  {
-    icon: <HiShieldCheck className="w-6 h-6" />,
-    title: "Trust & Safety",
-    desc: "All activities uphold Save the Children's safeguarding and child protection standards.",
-  },
-  {
-    icon: <HiUsers className="w-6 h-6" />,
-    title: "Collaboration",
-    desc: "We grow together — participants, mentors, and organizations side by side.",
-  },
-  {
-    icon: <HiRocketLaunch className="w-6 h-6" />,
-    title: "Real Impact",
-    desc: "We measure success by lives changed, not lines of code written.",
-  },
-];
-
-const milestones = [
-  { year: "2021", event: "First Navathon held in Phnom Penh with 40 participants." },
-  { year: "2022", event: "Expanded to 3 provinces. 12 community solutions launched." },
-  { year: "2023", event: "First online Navathon — 600+ participants across 10 countries." },
-  { year: "2024", event: "Launched NavaHub platform. 80+ projects submitted." },
-  { year: "2025", event: "8,000+ participants. 45+ communities impacted. Growing globally." },
-];
+import { useI18n } from "@/components/I18nProvider";
 
 const container = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
 const item = { hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } };
 
 export default function AboutSection() {
+  const { t } = useI18n();
+  const values = [
+    {
+      icon: <HiHeart className="w-6 h-6" />,
+      title: t("about.values.communityFirst.title"),
+      desc: t("about.values.communityFirst.desc"),
+    },
+    {
+      icon: <HiLightBulb className="w-6 h-6" />,
+      title: t("about.values.innovation.title"),
+      desc: t("about.values.innovation.desc"),
+    },
+    {
+      icon: <HiGlobeAlt className="w-6 h-6" />,
+      title: t("about.values.inclusivity.title"),
+      desc: t("about.values.inclusivity.desc"),
+    },
+    {
+      icon: <HiShieldCheck className="w-6 h-6" />,
+      title: t("about.values.trustSafety.title"),
+      desc: t("about.values.trustSafety.desc"),
+    },
+    {
+      icon: <HiUsers className="w-6 h-6" />,
+      title: t("about.values.collaboration.title"),
+      desc: t("about.values.collaboration.desc"),
+    },
+    {
+      icon: <HiRocketLaunch className="w-6 h-6" />,
+      title: t("about.values.realImpact.title"),
+      desc: t("about.values.realImpact.desc"),
+    },
+  ];
+
+  const milestones = [
+    { year: "2021", event: t("about.timeline.2021") },
+    { year: "2022", event: t("about.timeline.2022") },
+    { year: "2023", event: t("about.timeline.2023") },
+    { year: "2024", event: t("about.timeline.2024") },
+    { year: "2025", event: t("about.timeline.2025") },
+  ];
+
   return (
     <>
       {/* Hero */}
@@ -74,7 +76,7 @@ export default function AboutSection() {
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-100 text-[#CC0000] text-sm font-medium mb-5"
           >
             <span className="w-2 h-2 rounded-full bg-[#CC0000] animate-pulse" />
-            Powered by Save the Children
+            {t("about.hero.badge")}
           </motion.div>
 
           <motion.h1
@@ -83,7 +85,7 @@ export default function AboutSection() {
             transition={{ delay: 0.1 }}
             className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6"
           >
-            We make technology work <span className="text-[#CC0000]">for children in Cambodia.</span>
+            {t("about.hero.title.before")} <span className="text-[#CC0000]">{t("about.hero.title.accent")}</span>
           </motion.h1>
 
           <motion.p
@@ -92,8 +94,7 @@ export default function AboutSection() {
             transition={{ delay: 0.2 }}
             className="text-lg text-gray-500 leading-relaxed"
           >
-            NavaHub is the digital home of Navathon Cambodia, bringing together developers, designers, and
-            changemakers to build practical solutions for children and underserved communities.
+            {t("about.hero.subtitle")}
           </motion.p>
         </div>
       </section>
@@ -107,30 +108,28 @@ export default function AboutSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-5">Our Mission in Cambodia</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-5">{t("about.mission.title")}</h2>
             <p className="text-gray-500 leading-relaxed mb-5">
-              Navathon was born out of a simple belief: the best people to solve a community&apos;s problems are the
-              people who live them. We partner local tech talent with Save the Children&apos;s deep community
-              knowledge to create solutions that actually get used.
+              {t("about.mission.p1")}
             </p>
             <p className="text-gray-500 leading-relaxed mb-8">
-              Every Navathon is designed around a specific community challenge — water, education, child safety,
-              healthcare — and ends with working prototypes handed directly to the communities that need them.
+              {t("about.mission.p2")}
             </p>
 
             <div className="flex gap-6">
-              {[{ n: "120+", l: "Events" }, { n: "8K+", l: "Builders" }, { n: "45+", l: "Communities" }].map(
-                (s) => (
-                  <div key={s.l} className="text-center">
-                    <p className="text-2xl font-extrabold text-[#CC0000]">{s.n}</p>
-                    <p className="text-xs text-gray-500 mt-0.5">{s.l}</p>
-                  </div>
-                ),
-              )}
+              {[
+                { n: "120+", l: t("about.stats.events") },
+                { n: "8K+", l: t("about.stats.builders") },
+                { n: "45+", l: t("about.stats.communities") },
+              ].map((s) => (
+                <div key={s.l} className="text-center">
+                  <p className="text-2xl font-extrabold text-[#CC0000]">{s.n}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{s.l}</p>
+                </div>
+              ))}
             </div>
           </motion.div>
 
-          {/* Visual card */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -141,51 +140,11 @@ export default function AboutSection() {
             <div className="rounded-3xl bg-linear-to-br from-[#CC0000] to-orange-500 p-8 text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl animate-blob" />
               <p className="text-5xl mb-4">🌏</p>
-              <h3 className="text-2xl font-bold mb-3">Save the Children</h3>
+              <h3 className="text-2xl font-bold mb-3">{t("about.card.title")}</h3>
               <p className="text-red-100 text-sm leading-relaxed">
-                Save the Children has been working to protect children&apos;s rights and improve their lives for over
-                100 years. NavaHub and Navathon are part of their commitment to innovation-led community
-                development.
+                {t("about.card.body")}
               </p>
             </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Values */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">What We Stand For</h2>
-            <p className="text-gray-500">The principles that guide every Navathon.</p>
-          </motion.div>
-
-          <motion.div
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {values.map((v) => (
-              <motion.div
-                key={v.title}
-                variants={item}
-                whileHover={{ y: -4, boxShadow: "0 12px 30px rgba(0,0,0,0.07)" }}
-                className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm"
-              >
-                <div className="w-10 h-10 rounded-xl bg-red-100 text-[#CC0000] flex items-center justify-center mb-4">
-                  {v.icon}
-                </div>
-                <h3 className="text-base font-bold text-gray-900 mb-2">{v.title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{v.desc}</p>
-              </motion.div>
-            ))}
           </motion.div>
         </div>
       </section>
@@ -199,7 +158,7 @@ export default function AboutSection() {
             viewport={{ once: true }}
             className="text-3xl font-bold text-gray-900 mb-12 text-center"
           >
-            Our Journey
+            {t("about.timeline.heading")}
           </motion.h2>
 
           <div className="relative">

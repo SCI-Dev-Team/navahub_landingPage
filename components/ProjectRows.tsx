@@ -9,17 +9,6 @@ import { useI18n } from "@/components/I18nProvider";
 import { fetchContent } from "@/lib/contentApi";
 import type { Project } from "@/lib/projects";
 
-const projectImageById: Record<number, string> = {
-  1: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=80",
-  2: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80",
-  3: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=1200&q=80",
-  4: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80",
-  5: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?auto=format&fit=crop&w=1200&q=80",
-  6: "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?auto=format&fit=crop&w=1200&q=80",
-};
-const defaultProjectImage =
-  "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1200&q=80";
-
 const sectionContainer: Variants = {
   hidden: {},
   show: {
@@ -85,6 +74,7 @@ export default function ProjectRows() {
           {projects.map((project, index) => {
             const hasExternalLink = typeof project.externalLink === "string" && project.externalLink.trim().length > 0;
             const href = hasExternalLink ? project.externalLink!.trim() : `/projects/${project.id}`;
+            const imageSrc = typeof project.image === "string" ? project.image.trim() : "";
 
             return hasExternalLink ? (
               <a
@@ -99,14 +89,17 @@ export default function ProjectRows() {
                         index % 2 === 1 ? "md:order-2" : ""
                       }`}
                     >
-                      <Image
-                        src={project.image || projectImageById[project.id] || defaultProjectImage}
-                        alt={`${project.title} project`}
-                        fill
-                        unoptimized
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        loading="lazy"
-                      />
+                      {imageSrc ? (
+                        <Image
+                          src={imageSrc}
+                          alt={`${project.title} project`}
+                          fill
+                          unoptimized
+                          className="object-cover transition-transform duration-700 group-hover:scale-110"
+                          loading={index === 0 ? "eager" : "lazy"}
+                          priority={index === 0}
+                        />
+                      ) : null}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/5 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-45" />
                     </div>
 
@@ -142,14 +135,17 @@ export default function ProjectRows() {
                       index % 2 === 1 ? "md:order-2" : ""
                     }`}
                   >
-                    <Image
-                      src={project.image || projectImageById[project.id] || defaultProjectImage}
-                      alt={`${project.title} project`}
-                      fill
-                      unoptimized
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
-                      loading="lazy"
-                    />
+                    {imageSrc ? (
+                      <Image
+                        src={imageSrc}
+                        alt={`${project.title} project`}
+                        fill
+                        unoptimized
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        loading={index === 0 ? "eager" : "lazy"}
+                        priority={index === 0}
+                      />
+                    ) : null}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/5 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-45" />
                   </div>
 

@@ -2,7 +2,7 @@ import type { Locale } from "@/lib/i18n";
 import type { EventAnnouncement } from "@/lib/events";
 import type { Project } from "@/lib/projects";
 import type { UpcomingEvent } from "@/lib/upcomingEvents";
-import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { clientDb } from "@/lib/firebaseClient";
 import { DATASET_CONFIG, type Dataset, type FieldConfig } from "@/lib/dataAdmin";
 import { compareUpcomingEventsByDate, timestampFromIso } from "@/lib/datetime";
@@ -20,24 +20,111 @@ export type AdminEntry = {
   values: Record<string, unknown>;
 };
 
+const CONTENT_CACHE_TTL_MS = 60_000;
+const CONTENT_CACHE_KEY_PREFIX = "navahub:content:";
+
+type ContentCacheEntry = {
+  data: ContentPayload;
+  expiresAt: number;
+};
+
+const contentCache = new Map<Locale, ContentCacheEntry>();
+const inFlightContentRequests = new Map<Locale, Promise<ContentPayload>>();
+
+function cacheKeyForLocale(locale: Locale) {
+  return `${CONTENT_CACHE_KEY_PREFIX}${locale}`;
+}
+
+function hasWindowStorage() {
+  return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
+}
+
+function readContentCacheFromStorage(locale: Locale): ContentPayload | null {
+  if (!hasWindowStorage()) return null;
+
+  try {
+    const raw = window.localStorage.getItem(cacheKeyForLocale(locale));
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as ContentCacheEntry;
+    if (!parsed?.data || typeof parsed.expiresAt !== "number") return null;
+    if (parsed.expiresAt <= Date.now()) {
+      window.localStorage.removeItem(cacheKeyForLocale(locale));
+      return null;
+    }
+    return parsed.data;
+  } catch {
+    return null;
+  }
+}
+
+function writeContentCache(locale: Locale, data: ContentPayload) {
+  const entry: ContentCacheEntry = {
+    data,
+    expiresAt: Date.now() + CONTENT_CACHE_TTL_MS,
+  };
+
+  contentCache.set(locale, entry);
+  if (!hasWindowStorage()) return;
+
+  try {
+    window.localStorage.setItem(cacheKeyForLocale(locale), JSON.stringify(entry));
+  } catch {
+    // Ignore storage write failures (private mode / quota)
+  }
+}
+
+function invalidateContentCache() {
+  contentCache.clear();
+  inFlightContentRequests.clear();
+  if (!hasWindowStorage()) return;
+
+  for (const locale of ["en", "km"] as const) {
+    window.localStorage.removeItem(cacheKeyForLocale(locale));
+  }
+}
+
 function compareById(a: { id?: number }, b: { id?: number }) {
   return (a.id ?? 0) - (b.id ?? 0);
 }
 
 export async function fetchContent(locale: Locale): Promise<ContentPayload> {
-  const [projectsSnap, eventsSnap, upcomingSnap] = await Promise.all([
+  const cached = contentCache.get(locale);
+  if (cached && cached.expiresAt > Date.now()) {
+    return cached.data;
+  }
+
+  const storageCached = readContentCacheFromStorage(locale);
+  if (storageCached) {
+    writeContentCache(locale, storageCached);
+    return storageCached;
+  }
+
+  const activeRequest = inFlightContentRequests.get(locale);
+  if (activeRequest) {
+    return activeRequest;
+  }
+
+  const request = Promise.all([
     getDocs(query(collection(clientDb, "projects"), where("locale", "==", locale))),
     getDocs(query(collection(clientDb, "events"), where("locale", "==", locale))),
     getDocs(query(collection(clientDb, "upcomingEvents"), where("locale", "==", locale))),
-  ]);
+  ])
+    .then(([projectsSnap, eventsSnap, upcomingSnap]) => {
+      const projects = projectsSnap.docs.map((doc) => doc.data() as Project).sort(compareById);
+      const events = eventsSnap.docs.map((doc) => doc.data() as EventAnnouncement).sort(compareById);
+      const upcomingEvents = upcomingSnap.docs
+        .map((doc) => doc.data() as UpcomingEvent)
+        .sort(compareUpcomingEventsByDate);
+      const payload = { projects, events, upcomingEvents };
+      writeContentCache(locale, payload);
+      return payload;
+    })
+    .finally(() => {
+      inFlightContentRequests.delete(locale);
+    });
 
-  const projects = projectsSnap.docs.map((doc) => doc.data() as Project).sort(compareById);
-  const events = eventsSnap.docs.map((doc) => doc.data() as EventAnnouncement).sort(compareById);
-  const upcomingEvents = upcomingSnap.docs
-    .map((doc) => doc.data() as UpcomingEvent)
-    .sort(compareUpcomingEventsByDate);
-
-  return { projects, events, upcomingEvents };
+  inFlightContentRequests.set(locale, request);
+  return request;
 }
 
 type CreateContentPayload = {
@@ -115,6 +202,7 @@ export async function createContentEntry({
   }
 
   await addDoc(collection(clientDb, dataset), entry);
+  invalidateContentCache();
   return { id: maxId + 1 };
 }
 
@@ -160,6 +248,7 @@ export async function createBilingualContentEntry({
   }
 
   await Promise.all([addDoc(collection(clientDb, dataset), enEntry), addDoc(collection(clientDb, dataset), kmEntry)]);
+  invalidateContentCache();
 
   return { id: nextId };
 }
@@ -211,8 +300,20 @@ export async function updateContentEntry({ dataset, docId, values }: UpdateConte
   }
 
   await updateDoc(doc(clientDb, dataset, docId), nextValues);
+  invalidateContentCache();
 }
 
 export async function deleteContentEntry(dataset: Dataset, docId: string): Promise<void> {
-  await deleteDoc(doc(clientDb, dataset, docId));
+  const targetRef = doc(clientDb, dataset, docId);
+  const targetSnap = await getDoc(targetRef);
+  const targetId = targetSnap.data()?.id;
+
+  if (typeof targetId === "number") {
+    const siblings = await getDocs(query(collection(clientDb, dataset), where("id", "==", targetId)));
+    await Promise.all(siblings.docs.map((snapshot) => deleteDoc(snapshot.ref)));
+  } else {
+    await deleteDoc(targetRef);
+  }
+
+  invalidateContentCache();
 }
