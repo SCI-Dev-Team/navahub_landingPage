@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+
 import { I18nProvider } from "@/components/I18nProvider";
 import SiteChrome from "@/components/SiteChrome";
 
@@ -31,6 +32,24 @@ const oswald = localFont({
   display: "swap",
 });
 
+const kantumruyPro = localFont({
+  variable: "--font-kantumruy-pro",
+  src: [
+    { path: "../public/font/Kantumruy_Pro/KantumruyPro-VariableFont_wght.ttf", style: "normal" },
+    { path: "../public/font/Kantumruy_Pro/KantumruyPro-Italic-VariableFont_wght.ttf", style: "italic" },
+  ],
+  display: "swap",
+});
+
+const googleSans = localFont({
+  variable: "--font-google-sans",
+  src: [
+    { path: "../public/font/Google_Sans/GoogleSans-VariableFont_GRAD,opsz,wght.ttf", style: "normal" },
+    { path: "../public/font/Google_Sans/GoogleSans-Italic-VariableFont_GRAD,opsz,wght.ttf", style: "italic" },
+  ],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "NavaHub Cambodia | Save the Children",
   description:
@@ -43,7 +62,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${lato.variable} ${oswald.variable} h-full antialiased`}>
+    <html lang="en" className={`${lato.variable} ${oswald.variable} ${googleSans.variable} ${kantumruyPro.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-gray-900">
         <I18nProvider>
           <SiteChrome>{children}</SiteChrome>
