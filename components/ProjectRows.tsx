@@ -83,7 +83,7 @@ export default function ProjectRows() {
   }, [locale]);
 
   return (
-    <section id="projects" className="mt-5 py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <section id="projects" className="mt-5 py-20 px-4 sm:px-6 lg:px-8 bg-[#DA291C]">
       <div className="w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -92,14 +92,14 @@ export default function ProjectRows() {
           transition={{ duration: 0.45 }}
           className="mb-10"
         >
-          <div className="w-12 h-1 bg-[#DA291C] mb-4" />
-          <h2 className="text-3xl font-bold text-[#222221] mb-2 uppercase tracking-wide">
+          <div className="w-12 h-1 bg-white mb-4" />
+          <h2 className="text-3xl font-bold text-white mb-2 uppercase tracking-wide">
             {t("projects.heading")}
           </h2>
-          <p className="text-[#4A4F53]">{t("projects.subtitle")}</p>
+          <p className="text-red-100">{t("projects.subtitle")}</p>
         </motion.div>
 
-        <div className="border-t border-gray-100">
+        <div className="border-t border-red-400">
           {/* Loading skeletons */}
           {loading && (
             <>
@@ -112,15 +112,15 @@ export default function ProjectRows() {
           {/* Error state */}
           {!loading && error && (
             <div className="flex flex-col items-center justify-center py-20 gap-4 text-center">
-              <HiArrowPath className="w-8 h-8 text-gray-300" />
-              <p className="text-[#4A4F53] text-sm">Failed to load projects. Please refresh the page.</p>
+              <HiArrowPath className="w-8 h-8 text-red-200" />
+              <p className="text-red-100 text-sm">Failed to load projects. Please refresh the page.</p>
             </div>
           )}
 
           {/* Empty state */}
           {!loading && !error && projects.length === 0 && (
             <div className="flex flex-col items-center justify-center py-20 gap-3 text-center">
-              <p className="text-[#4A4F53] text-sm">No projects available yet.</p>
+              <p className="text-red-100 text-sm">No projects available yet.</p>
             </div>
           )}
 
@@ -136,7 +136,7 @@ export default function ProjectRows() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className={`overflow-hidden border-b border-gray-100 ${isOdd ? "bg-[#F3F2EE]" : "bg-white"}`}
+                className={`overflow-hidden border-b border-red-400 ${isOdd ? "bg-white" : "bg-white"}`}
               >
                 <div className="grid md:grid-cols-2">
                   <div

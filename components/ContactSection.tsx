@@ -3,15 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { HiEnvelope, HiMapPin, HiPhone, HiPaperAirplane } from "react-icons/hi2";
-import { FaFacebook, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 import { useI18n } from "@/components/I18nProvider";
-
-const socials = [
-  { icon: <FaXTwitter />, label: "X (Twitter)", href: "#" },
-  { icon: <FaLinkedinIn />, label: "LinkedIn", href: "#" },
-  { icon: <FaFacebook />, label: "Facebook", href: "#" },
-  { icon: <FaInstagram />, label: "Instagram", href: "#" },
-];
 
 export default function ContactSection() {
   const { t } = useI18n();
@@ -101,35 +93,23 @@ export default function ContactSection() {
                 ))}
               </div>
             </div>
-
-            <div>
-              <h3 className="text-sm font-semibold text-gray-700 mb-3">{t("contact.follow")}</h3>
-              <div className="flex gap-3">
-                {socials.map(({ icon, label, href }) => (
-                  <motion.a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    whileHover={{ scale: 1.1, backgroundColor: "#DA291C", color: "#fff" }}
-                    className="w-9 h-9 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center transition-colors"
-                  >
-                    {icon}
-                  </motion.a>
-                ))}
-              </div>
-            </div>
-
-            {/* Map placeholder */}
+            {/* Map */}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="rounded-2xl overflow-hidden h-44 bg-linear-to-br from-red-100 to-orange-100 flex items-center justify-center"
+              className="rounded-2xl overflow-hidden h-56"
             >
-              <div className="text-center">
-                <span className="text-4xl">🗺️</span>
-                <p className="text-sm text-gray-500 mt-2">{t("contact.map.office")}</p>
-              </div>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3908.902278420078!2d104.92406337585975!3d11.558862844272856!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109513a11e8253b%3A0x2655e7df533763a9!2sSave%20the%20Children%20in%20Cambodia!5e0!3m2!1sen!2skh!4v1774672614669!5m2!1sen!2skh"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Save the Children in Cambodia"
+              />
             </motion.div>
           </motion.div>
 
