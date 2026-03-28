@@ -10,7 +10,6 @@ export type UpcomingEvent = {
   year?: string;
   title: string;
   type: string;
-  typeColor: string;
   location: string;
   image?: string;
 };

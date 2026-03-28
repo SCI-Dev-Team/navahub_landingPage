@@ -49,13 +49,6 @@ export const DATASET_CONFIG: Record<Dataset, FieldConfig[]> = {
     { key: "eventDate", label: "Event Date", type: "date", required: true },
     { key: "title", label: "Title", type: "text", required: true },
     { key: "type", label: "Type", type: "text", required: true, placeholder: "Navathon" },
-    {
-      key: "typeColor",
-      label: "Type Color Classes",
-      type: "text",
-      required: true,
-      placeholder: "text-[#CC0000] bg-red-50",
-    },
     { key: "location", label: "Location", type: "text", required: true },
   ],
 };

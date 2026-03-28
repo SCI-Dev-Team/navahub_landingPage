@@ -90,13 +90,20 @@ function compareById(a: { id?: number }, b: { id?: number }) {
 export async function fetchContent(locale: Locale): Promise<ContentPayload> {
   const cached = contentCache.get(locale);
   if (cached && cached.expiresAt > Date.now()) {
-    return cached.data;
+    return {
+      ...cached.data,
+      upcomingEvents: [...cached.data.upcomingEvents].sort(compareUpcomingEventsByDate),
+    };
   }
 
   const storageCached = readContentCacheFromStorage(locale);
   if (storageCached) {
-    writeContentCache(locale, storageCached);
-    return storageCached;
+    const sorted: ContentPayload = {
+      ...storageCached,
+      upcomingEvents: [...storageCached.upcomingEvents].sort(compareUpcomingEventsByDate),
+    };
+    writeContentCache(locale, sorted);
+    return sorted;
   }
 
   const activeRequest = inFlightContentRequests.get(locale);

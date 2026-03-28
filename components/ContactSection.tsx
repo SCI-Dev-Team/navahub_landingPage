@@ -27,44 +27,6 @@ export default function ContactSection() {
 
   return (
     <>
-      {/* Hero */}
-      <section
-        id="contact"
-        className="relative pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-linear-to-b from-red-50 to-white"
-      >
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="animate-blob absolute -top-20 -right-20 w-72 h-72 bg-red-100 rounded-full opacity-40 blur-3xl" />
-        </div>
-
-        <div className="relative max-w-3xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-100 text-[#DA291C] text-sm font-medium mb-5"
-          >
-            <span className="w-2 h-2 rounded-full bg-[#DA291C] animate-pulse" />
-            {t("contact.hero.badge")}
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl sm:text-5xl font-extrabold text-[#222221] mb-4 uppercase tracking-wide"
-          >
-            {t("contact.hero.title.before")} <span className="text-[#DA291C]">{t("contact.hero.title.accent")}</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg text-[#4A4F53]"
-          >
-            {t("contact.hero.subtitle")}
-          </motion.p>
-        </div>
-      </section>
 
       {/* Contact grid */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">

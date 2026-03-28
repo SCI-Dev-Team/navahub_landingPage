@@ -182,7 +182,7 @@ export default function AdminDashboardPage() {
           message:
             dataset === "upcomingEvents"
               ? "Upcoming event updated."
-              : `Updated ${dataset} item #${selectedEntry?.id ?? ""}.`,
+              : `Updated ${dataset} item.`,
         });
       } else {
         if (createStep === 1) {
@@ -199,7 +199,7 @@ export default function AdminDashboardPage() {
           message:
             dataset === "upcomingEvents"
               ? "Created bilingual upcoming events."
-              : `Created bilingual ${dataset} item #${result.id}.`,
+              : `Created bilingual ${dataset} item.`,
         });
       }
       await loadEntries(dataset, locale);
@@ -249,50 +249,37 @@ export default function AdminDashboardPage() {
   /* ── Dashboard UI ───────────────────────────────────────────────────────── */
   return (
     <main className="min-h-screen bg-neutral-50 px-4 py-8 sm:px-6 lg:px-8">
-      {/* Header */}
-      <div className="mx-auto mb-6 w-full max-w-7xl rounded-2xl border border-neutral-200 bg-white px-6 py-5 shadow-sm flex items-center justify-between gap-4">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#DA291C]">NavaHub Admin</p>
-          <h1 className="mt-1 text-2xl font-bold text-neutral-900 sm:text-3xl">Content Management</h1>
-          <p className="mt-0.5 text-sm text-neutral-500">{user?.email}</p>
-        </div>
-        <button
-          type="button"
-          onClick={handleSignOut}
-          className="shrink-0 rounded-xl border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50 transition-colors"
-        >
-          Sign Out
-        </button>
-      </div>
+      <div className="mx-auto w-full max-w-7xl">
+        {/* Combined box: sidebar + main */}
+        <div className="rounded-2xl border border-neutral-200 bg-white shadow-sm overflow-hidden">
+          <div className="grid lg:grid-cols-[220px_1fr]">
+            {/* Sidebar */}
+            <aside className="border-b border-neutral-200 lg:border-b-0 lg:border-r p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">Datasets</p>
+              <h2 className="mt-1 text-lg font-semibold text-neutral-900">Choose Section</h2>
+              <div className="mt-4 space-y-2">
+                {DATASETS.map((item) => {
+                  const isActive = item === dataset;
+                  return (
+                    <button
+                      key={item}
+                      type="button"
+                      onClick={() => handleDatasetChange(item)}
+                      className={`w-full rounded-xl border px-3 py-2.5 text-left text-sm font-medium capitalize transition ${
+                        isActive
+                          ? "border-[#DA291C] bg-[#DA291C] text-white shadow-sm"
+                          : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300 hover:bg-neutral-50"
+                      }`}
+                    >
+                      {item}
+                    </button>
+                  );
+                })}
+              </div>
+            </aside>
 
-      <div className="mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-[260px_1fr]">
-        {/* Sidebar */}
-        <aside className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">Datasets</p>
-          <h2 className="mt-1 text-lg font-semibold text-neutral-900">Choose Section</h2>
-          <div className="mt-4 space-y-2">
-            {DATASETS.map((item) => {
-              const isActive = item === dataset;
-              return (
-                <button
-                  key={item}
-                  type="button"
-                  onClick={() => handleDatasetChange(item)}
-                  className={`w-full rounded-xl border px-3 py-2.5 text-left text-sm font-medium capitalize transition ${
-                    isActive
-                      ? "border-[#DA291C] bg-[#DA291C] text-white shadow-sm"
-                      : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300 hover:bg-neutral-50"
-                  }`}
-                >
-                  {item}
-                </button>
-              );
-            })}
-          </div>
-        </aside>
-
-        {/* Main */}
-        <section className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
+            {/* Main */}
+            <section className="p-6 sm:p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">Current Dataset</p>
           <p className="mt-1 text-lg font-semibold capitalize text-neutral-900">{dataset}</p>
           <p className="mt-1 text-sm text-neutral-600">
@@ -394,9 +381,7 @@ export default function AdminDashboardPage() {
                         onClick={() => { setSelectedDocId(entry.docId); setViewMode("form"); }}
                         className="text-left text-sm font-semibold text-neutral-900 transition hover:text-[#DA291C]"
                       >
-                        {dataset === "upcomingEvents"
-                          ? String(entry.values.title ?? entry.values.event ?? "Untitled")
-                          : `#${entry.id} ${String(entry.values.title ?? entry.values.event ?? "Untitled")}`}
+                        {String(entry.values.title ?? entry.values.event ?? "Untitled")}
                       </button>
                       <div className="flex items-center gap-3">
                         <button
@@ -522,6 +507,8 @@ export default function AdminDashboardPage() {
             </div>
           ) : null}
         </section>
+        </div>
+      </div>
       </div>
 
       {/* Delete confirm modal */}
@@ -532,9 +519,7 @@ export default function AdminDashboardPage() {
             <p className="mt-2 text-sm text-neutral-600">
               Are you sure you want to delete{" "}
               <span className="font-semibold text-neutral-900">
-                {dataset === "upcomingEvents"
-                  ? String(pendingDelete.values.title ?? pendingDelete.values.event ?? "this record")
-                  : `#${pendingDelete.id} ${String(pendingDelete.values.title ?? pendingDelete.values.event ?? "this record")}`}
+                {String(pendingDelete.values.title ?? pendingDelete.values.event ?? "this record")}
               </span>
               ? This action cannot be undone.
             </p>

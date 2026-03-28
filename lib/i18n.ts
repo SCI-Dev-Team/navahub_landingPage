@@ -80,7 +80,7 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "contact.hero.title.accent": "Touch Cambodia",
     "contact.hero.subtitle":
       "Whether you want to join, organize, sponsor, or support programs in Cambodia, we're here to help.",
-    "contact.details.heading": "Cambodia Contact Details",
+    "contact.details.heading": "Our Contact Details",
     "contact.follow": "Follow us",
     "contact.info.email": "Email",
     "contact.info.phone": "Phone",
@@ -201,7 +201,7 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "contact.hero.title.accent": "យើងនៅកម្ពុជា",
     "contact.hero.subtitle":
       "មិនថាអ្នកចង់ចូលរួម រៀបចំ ឧបត្ថម្ភ ឬគាំទ្រកម្មវិធីនៅកម្ពុជា យើងត្រៀមជួយជានិច្ច។",
-    "contact.details.heading": "ព័ត៌មានទំនាក់ទំនងនៅកម្ពុជា",
+    "contact.details.heading": "ព័ត៌មានទំនាក់ទំនង",
     "contact.follow": "តាមដានពួកយើង",
     "contact.info.email": "អ៊ីមែល",
     "contact.info.phone": "ទូរស័ព្ទ",

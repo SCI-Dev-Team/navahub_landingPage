@@ -60,46 +60,6 @@ export default function AboutSection() {
 
   return (
     <>
-      {/* Hero */}
-      <section
-        id="about"
-        className="relative pt-28 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-linear-to-b from-red-50 to-white"
-      >
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="animate-blob absolute -top-20 -left-20 w-80 h-80 bg-red-100 rounded-full opacity-40 blur-3xl" />
-          <div className="animate-blob-delay absolute top-10 right-10 w-64 h-64 bg-orange-100 rounded-full opacity-30 blur-3xl" />
-        </div>
-
-        <div className="relative max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-100 text-[#DA291C] text-sm font-medium mb-5"
-          >
-            <span className="w-2 h-2 rounded-full bg-[#DA291C] animate-pulse" />
-            {t("about.hero.badge")}
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl sm:text-5xl font-extrabold text-[#222221] mb-6 uppercase tracking-wide"
-          >
-            {t("about.hero.title.before")} <span className="text-[#DA291C]">{t("about.hero.title.accent")}</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg text-[#4A4F53] leading-relaxed"
-          >
-            {t("about.hero.subtitle")}
-          </motion.p>
-        </div>
-      </section>
-
       {/* Mission */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
@@ -198,19 +158,19 @@ export default function AboutSection() {
       </section>
 
       {/* Timeline */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#DA291C]">
         <div className="max-w-3xl mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl font-bold text-[#222221] mb-12 text-center uppercase tracking-wide"
+            className="text-3xl font-bold text-white mb-12 text-center uppercase tracking-wide"
           >
             {t("about.timeline.heading")}
           </motion.h2>
 
           <div className="relative">
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-red-100" />
+            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-white/30" />
 
             {milestones.map((m, i) => (
               <motion.div
@@ -221,11 +181,11 @@ export default function AboutSection() {
                 transition={{ delay: i * 0.1, duration: 0.45 }}
                 className="relative flex gap-6 mb-8 pl-20"
               >
-                <div className="absolute left-0 w-16 h-16 rounded-2xl bg-[#DA291C] flex items-center justify-center shadow-md shadow-red-200">
-                  <span className="text-white font-extrabold text-sm">{m.year}</span>
+                <div className="absolute left-0 w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-md shadow-red-900/30">
+                  <span className="text-[#DA291C] font-extrabold text-sm">{m.year}</span>
                 </div>
-                <div className="bg-gray-50 rounded-xl px-5 py-4 flex-1 border border-gray-100">
-                  <p className="text-sm text-gray-700 leading-relaxed">{m.event}</p>
+                <div className="bg-white/10 rounded-xl px-5 py-4 flex-1 border border-white/20">
+                  <p className="text-sm text-white/90 leading-relaxed">{m.event}</p>
                 </div>
               </motion.div>
             ))}
