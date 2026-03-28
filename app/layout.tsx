@@ -19,6 +19,18 @@ const lato = localFont({
   display: "swap",
 });
 
+const oswald = localFont({
+  variable: "--font-oswald",
+  src: [
+    { path: "../public/font/Oswald/static/Oswald-Light.ttf", weight: "300", style: "normal" },
+    { path: "../public/font/Oswald/static/Oswald-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../public/font/Oswald/static/Oswald-Medium.ttf", weight: "500", style: "normal" },
+    { path: "../public/font/Oswald/static/Oswald-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "../public/font/Oswald/static/Oswald-Bold.ttf", weight: "700", style: "normal" },
+  ],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "NavaHub Cambodia | Save the Children",
   description:
@@ -31,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${lato.variable} h-full antialiased`}>
+    <html lang="en" className={`${lato.variable} ${oswald.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-gray-900">
         <I18nProvider>
           <SiteChrome>{children}</SiteChrome>

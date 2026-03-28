@@ -20,7 +20,7 @@ export type AdminEntry = {
   values: Record<string, unknown>;
 };
 
-const CONTENT_CACHE_TTL_MS = 60_000;
+const CONTENT_CACHE_TTL_MS = 600_000; // 10 minutes
 const CONTENT_CACHE_KEY_PREFIX = "navahub:content:";
 
 type ContentCacheEntry = {

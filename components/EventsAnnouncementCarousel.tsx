@@ -40,20 +40,20 @@ export default function EventsAnnouncementCarousel({ events, t }: Props) {
   };
 
   return (
-    <div className="overflow-hidden border border-slate-200/80 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.09)]">
+    <div className="overflow-hidden border border-gray-200/80 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.09)]">
       {/* Red top accent */}
-      <div className="h-[3px] bg-[#CC0000]" />
+      <div className="h-[3px] bg-[#DA291C]" />
 
       <div className="grid lg:grid-cols-[1fr_1.15fr]">
         {/* Left: Event content */}
         <div className="flex flex-col p-6 sm:p-8 lg:p-10">
           {/* Label + counter */}
           <div className="flex items-center justify-between">
-            <span className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.28em] text-[#CC0000]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#CC0000]" />
+            <span className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.28em] text-[#DA291C]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#DA291C]" />
               {t("hero.eventsAnnouncement")}
             </span>
-            <span className="font-mono text-xs font-semibold tabular-nums text-slate-400">
+            <span className="font-mono text-xs font-semibold tabular-nums text-[#999999]">
               {indexLabel}&nbsp;/&nbsp;{totalLabel}
             </span>
           </div>
@@ -68,17 +68,17 @@ export default function EventsAnnouncementCarousel({ events, t }: Props) {
               transition={{ duration: 0.26, ease: "easeOut" }}
               className="mt-6 flex flex-1 flex-col"
             >
-              <h3 className="line-clamp-3 min-h-[90px] text-2xl font-black leading-tight tracking-tight text-slate-900 sm:text-3xl lg:text-[34px]">
+              <h3 className="line-clamp-3 min-h-[90px] text-2xl font-black leading-tight tracking-tight text-[#222221] sm:text-3xl lg:text-[34px]">
                 {featuredEvent?.title}
               </h3>
 
-              <p className="mt-3 line-clamp-2 min-h-[48px] text-sm leading-relaxed text-slate-500 sm:text-base">
+              <p className="mt-3 line-clamp-2 min-h-[48px] text-sm leading-relaxed text-[#4A4F53] sm:text-base">
                 {featuredEvent?.description}
               </p>
 
               {/* Date & location chips */}
               <div className="mt-5 flex flex-wrap items-center gap-2.5">
-                <span className="inline-flex items-center gap-1.5 rounded-lg bg-[#CC0000]/[0.08] px-3 py-1.5 text-xs font-bold text-[#CC0000]">
+                <span className="inline-flex items-center gap-1.5 rounded-lg bg-[#DA291C]/[0.08] px-3 py-1.5 text-xs font-bold text-[#DA291C]">
                   <svg
                     className="h-3.5 w-3.5"
                     fill="none"
@@ -96,9 +96,9 @@ export default function EventsAnnouncementCarousel({ events, t }: Props) {
                 </span>
 
                 {featuredEvent?.location && (
-                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600">
+                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-semibold text-[#4A4F53]">
                     <svg
-                      className="h-3.5 w-3.5 flex-shrink-0 text-slate-400"
+                      className="h-3.5 w-3.5 flex-shrink-0 text-[#999999]"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -124,7 +124,7 @@ export default function EventsAnnouncementCarousel({ events, t }: Props) {
               {featuredEvent && (
                 <a
                   href={featuredEvent.ctaHref}
-                  className="mt-6 inline-flex w-fit items-center gap-2 rounded-xl bg-[#CC0000] px-5 py-2.5 text-sm font-bold text-white shadow-[0_4px_14px_rgba(204,0,0,0.28)] transition-all hover:bg-[#b10000] hover:shadow-[0_6px_20px_rgba(204,0,0,0.35)] active:scale-[0.97]"
+                  className="mt-6 inline-flex w-fit items-center gap-2 rounded-xl bg-[#DA291C] px-5 py-2.5 text-sm font-bold text-white shadow-[0_4px_14px_rgba(218,41,28,0.28)] transition-all hover:bg-[#A51414] hover:shadow-[0_6px_20px_rgba(218,41,28,0.35)] active:scale-[0.97]"
                 >
                   {featuredEvent.ctaLabel}
                   <HiArrowRight className="h-4 w-4" />
@@ -144,7 +144,7 @@ export default function EventsAnnouncementCarousel({ events, t }: Props) {
                   aria-label={`Go to event ${idx + 1} of ${safeTotal}`}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
                     idx === eventIndex
-                      ? "w-8 bg-[#CC0000]"
+                      ? "w-8 bg-[#DA291C]"
                       : "w-1.5 bg-slate-200 hover:bg-slate-300"
                   }`}
                 />
@@ -156,7 +156,7 @@ export default function EventsAnnouncementCarousel({ events, t }: Props) {
                 <button
                   type="button"
                   onClick={goPrevEvent}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-all hover:border-[#CC0000]/30 hover:bg-[#fff1f1] hover:text-[#CC0000]"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 text-[#4A4F53] transition-all hover:border-[#DA291C]/30 hover:bg-[#fff1f1] hover:text-[#DA291C]"
                   aria-label={t("hero.eventsPrevious")}
                 >
                   <HiArrowLeft className="h-4 w-4" />
@@ -164,7 +164,7 @@ export default function EventsAnnouncementCarousel({ events, t }: Props) {
                 <button
                   type="button"
                   onClick={goNextEvent}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#CC0000] text-white shadow-[0_4px_12px_rgba(204,0,0,0.28)] transition-all hover:bg-[#b10000]"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#DA291C] text-white shadow-[0_4px_12px_rgba(218,41,28,0.28)] transition-all hover:bg-[#A51414]"
                   aria-label={t("hero.eventsNext")}
                 >
                   <HiArrowRight className="h-4 w-4" />

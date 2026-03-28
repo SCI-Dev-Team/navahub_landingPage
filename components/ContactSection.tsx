@@ -48,9 +48,9 @@ export default function ContactSection() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-100 text-[#CC0000] text-sm font-medium mb-5"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-100 text-[#DA291C] text-sm font-medium mb-5"
           >
-            <span className="w-2 h-2 rounded-full bg-[#CC0000] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-[#DA291C] animate-pulse" />
             {t("contact.hero.badge")}
           </motion.div>
 
@@ -58,16 +58,16 @@ export default function ContactSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4"
+            className="text-4xl sm:text-5xl font-extrabold text-[#222221] mb-4 uppercase tracking-wide"
           >
-            {t("contact.hero.title.before")} <span className="text-[#CC0000]">{t("contact.hero.title.accent")}</span>
+            {t("contact.hero.title.before")} <span className="text-[#DA291C]">{t("contact.hero.title.accent")}</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-gray-500"
+            className="text-lg text-[#4A4F53]"
           >
             {t("contact.hero.subtitle")}
           </motion.p>
@@ -86,11 +86,11 @@ export default function ContactSection() {
             className="lg:col-span-2 space-y-8"
           >
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">{t("contact.details.heading")}</h2>
+              <h2 className="text-2xl font-bold text-[#222221] mb-4 uppercase tracking-wide">{t("contact.details.heading")}</h2>
               <div className="space-y-4">
                 {contactInfo.map((c) => (
                   <div key={c.label} className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-red-100 text-[#CC0000] flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-red-100 text-[#DA291C] flex items-center justify-center shrink-0">
                       {c.icon}
                     </div>
                     <div>
@@ -110,7 +110,7 @@ export default function ContactSection() {
                     key={label}
                     href={href}
                     aria-label={label}
-                    whileHover={{ scale: 1.1, backgroundColor: "#CC0000", color: "#fff" }}
+                    whileHover={{ scale: 1.1, backgroundColor: "#DA291C", color: "#fff" }}
                     className="w-9 h-9 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center transition-colors"
                   >
                     {icon}
@@ -154,22 +154,22 @@ export default function ContactSection() {
                 >
                   <span className="text-3xl">🎉</span>
                 </motion.div>
-                <h3 className="text-xl font-bold text-gray-900">{t("contact.success.title")}</h3>
-                <p className="text-gray-500 text-sm max-w-xs">
+                <h3 className="text-xl font-bold text-[#222221]">{t("contact.success.title")}</h3>
+                <p className="text-[#4A4F53] text-sm max-w-xs">
                   {t("contact.success.body")}
                 </p>
                 <motion.button
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => setSubmitted(false)}
-                  className="mt-2 px-5 py-2.5 rounded-xl bg-[#CC0000] text-white text-sm font-semibold"
+                  className="mt-2 px-5 py-2.5 rounded-xl bg-[#DA291C] text-white text-sm font-semibold"
                 >
                   {t("contact.success.cta")}
                 </motion.button>
               </motion.div>
             ) : (
               <>
-                <h2 className="text-xl font-bold text-gray-900 mb-6">{t("contact.form.title")}</h2>
+                <h2 className="text-xl font-bold text-[#222221] mb-6 uppercase tracking-wide">{t("contact.form.title")}</h2>
                 <form
                   className="space-y-4"
                   onSubmit={(e) => {
@@ -184,7 +184,7 @@ export default function ContactSection() {
                         required
                         type="text"
                         placeholder="Sopheak"
-                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CC0000] focus:border-transparent transition-shadow"
+                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#DA291C] focus:border-transparent transition-shadow"
                       />
                     </div>
                     <div>
@@ -193,7 +193,7 @@ export default function ContactSection() {
                         required
                         type="text"
                         placeholder="Meas"
-                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CC0000] focus:border-transparent transition-shadow"
+                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#DA291C] focus:border-transparent transition-shadow"
                       />
                     </div>
                   </div>
@@ -204,19 +204,18 @@ export default function ContactSection() {
                       required
                       type="email"
                       placeholder="you@example.com"
-                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CC0000] focus:border-transparent transition-shadow"
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#DA291C] focus:border-transparent transition-shadow"
                     />
                   </div>
 
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">{t("contact.form.subject")}</label>
-                    <select className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CC0000] focus:border-transparent bg-white transition-shadow">
-                      <option>{t("contact.form.subject.join")}</option>
-                      <option>{t("contact.form.subject.organize")}</option>
-                      <option>{t("contact.form.subject.sponsor")}</option>
-                      <option>{t("contact.form.subject.media")}</option>
-                      <option>{t("contact.form.subject.other")}</option>
-                    </select>
+                    <input
+                      required
+                      type="text"
+                      placeholder={t("contact.form.subject")}
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#DA291C] focus:border-transparent transition-shadow"
+                    />
                   </div>
 
                   <div>
@@ -225,15 +224,15 @@ export default function ContactSection() {
                       required
                       rows={4}
                       placeholder={t("contact.form.messagePlaceholder")}
-                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CC0000] focus:border-transparent resize-none transition-shadow"
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#DA291C] focus:border-transparent resize-none transition-shadow"
                     />
                   </div>
 
                   <motion.button
                     type="submit"
-                    whileHover={{ scale: 1.02, boxShadow: "0 8px 24px rgba(204,0,0,0.3)" }}
+                    whileHover={{ scale: 1.02, boxShadow: "0 8px 24px rgba(218,41,28,0.3)" }}
                     whileTap={{ scale: 0.97 }}
-                    className="w-full py-3 rounded-xl bg-[#CC0000] text-white font-semibold text-sm flex items-center justify-center gap-2 hover:bg-[#aa0000] transition-colors"
+                    className="w-full py-3 rounded-xl bg-[#DA291C] text-white font-semibold text-sm flex items-center justify-center gap-2 hover:bg-[#A51414] transition-colors"
                   >
                     <HiPaperAirplane className="w-4 h-4" />
                     {t("contact.form.send")}
@@ -252,7 +251,7 @@ export default function ContactSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-2xl font-bold text-gray-900 mb-8 text-center"
+            className="text-2xl font-bold text-[#222221] mb-8 text-center uppercase tracking-wide"
           >
             {t("contact.faq.heading")}
           </motion.h2>
@@ -273,7 +272,7 @@ export default function ContactSection() {
                   <span className="text-sm font-semibold text-gray-900">{faq.q}</span>
                   <motion.span
                     animate={{ rotate: openFaq === i ? 45 : 0 }}
-                    className="text-[#CC0000] font-bold text-lg shrink-0 ml-3"
+                    className="text-[#DA291C] font-bold text-lg shrink-0 ml-3"
                   >
                     +
                   </motion.span>

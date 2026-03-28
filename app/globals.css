@@ -3,8 +3,9 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-  --brand: #CC0000;
+  --foreground: #222221;
+  --brand: #DA291C;
+  --brand-dark: #A51414;
 }
 
 @theme inline {
@@ -12,6 +13,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-lato);
   --font-mono: var(--font-lato);
+  --font-display: var(--font-oswald);
 }
 
 body {
@@ -24,8 +26,25 @@ body {
   scroll-behavior: smooth;
 }
 
+/* Brand guideline: Oswald for all headlines (English only) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-oswald), "Arial", sans-serif;
+  letter-spacing: 0.01em;
+}
+
+/* Khmer locale: revert headings to Khmer script fonts */
 html.locale-km body {
   font-family: "Noto Serif Khmer", "Moul", var(--font-lato), "Segoe UI", sans-serif;
+}
+
+html.locale-km h1,
+html.locale-km h2,
+html.locale-km h3,
+html.locale-km h4,
+html.locale-km h5,
+html.locale-km h6 {
+  font-family: "Noto Serif Khmer", "Moul", var(--font-lato), sans-serif;
+  letter-spacing: 0;
 }
 
 @keyframes blob {
@@ -77,7 +96,7 @@ html.locale-km body {
 }
 
 .shimmer-text {
-  background: linear-gradient(90deg, #CC0000, #ff4444, #CC0000);
+  background: linear-gradient(90deg, #DA291C, #ff4444, #DA291C);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;

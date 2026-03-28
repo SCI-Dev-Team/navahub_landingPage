@@ -123,7 +123,7 @@ export default function Footer() {
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="text-sm text-black/90 hover:text-[#CC0000] transition-colors"
+                    className="text-sm text-black/90 hover:text-[#DA291C] transition-colors"
                     target={l.href.startsWith("http") ? "_blank" : undefined}
                     rel={l.href.startsWith("http") ? "noreferrer" : undefined}
                   >
@@ -142,7 +142,7 @@ export default function Footer() {
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="text-sm text-black/90 hover:text-[#CC0000] transition-colors"
+                    className="text-sm text-black/90 hover:text-[#DA291C] transition-colors"
                   >
                     {l.label}
                   </a>
@@ -162,8 +162,8 @@ export default function Footer() {
                     aria-label={s.label}
                     target="_blank"
                     rel="noreferrer"
-                    whileHover={{ scale: 1.08, color: "#aa0000" }}
-                    className="flex items-center justify-center text-[#CC0000] transition-colors"
+                    whileHover={{ scale: 1.08, color: "#A51414" }}
+                    className="flex items-center justify-center text-[#DA291C] transition-colors"
                   >
                     {s.icon}
                   </motion.a>

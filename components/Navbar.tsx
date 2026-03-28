@@ -121,7 +121,7 @@ export default function Navbar() {
             <button
               onClick={() => setLocale("en")}
               className={`rounded-full px-2.5 py-1 text-xs font-semibold transition ${
-                locale === "en" ? "bg-[#CC0000] text-white" : "text-black hover:text-[#CC0000]"
+                locale === "en" ? "bg-[#DA291C] text-white" : "text-black hover:text-[#DA291C]"
               }`}
             >
               EN
@@ -129,7 +129,7 @@ export default function Navbar() {
             <button
               onClick={() => setLocale("km")}
               className={`rounded-full px-2.5 py-1 text-xs font-semibold transition ${
-                locale === "km" ? "bg-[#CC0000] text-white" : "text-black hover:text-[#CC0000]"
+                locale === "km" ? "bg-[#DA291C] text-white" : "text-black hover:text-[#DA291C]"
               }`}
             >
               KM
@@ -160,12 +160,12 @@ export default function Navbar() {
                     className={`relative text-sm font-medium transition-colors group ${
                       isActive
                         ? "text-black"
-                        : "text-black hover:text-[#CC0000]"
+                        : "text-black hover:text-[#DA291C]"
                     }`}
                   >
                     {link.label}
                     <span
-                      className={`absolute -bottom-0.5 left-0 h-0.5 bg-[#CC0000] rounded-full transition-all duration-300 ${
+                      className={`absolute -bottom-0.5 left-0 h-0.5 bg-[#DA291C] rounded-full transition-all duration-300 ${
                         isActive ? "w-full" : "w-0 group-hover:w-full"
                       }`}
                     />
@@ -178,7 +178,7 @@ export default function Navbar() {
           {/* Mobile hamburger */}
           <button
             className={`md:hidden absolute right-0 p-2 rounded-md ${
-              "text-black hover:text-[#CC0000]"
+              "text-black hover:text-[#DA291C]"
             }`}
             onClick={() => setMenuOpen(!menuOpen)}
           >
@@ -212,7 +212,7 @@ export default function Navbar() {
                 <button
                   onClick={() => setLocale("en")}
                   className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                    locale === "en" ? "bg-[#CC0000] text-white" : "bg-gray-100 text-black"
+                    locale === "en" ? "bg-[#DA291C] text-white" : "bg-gray-100 text-black"
                   }`}
                 >
                   EN
@@ -220,7 +220,7 @@ export default function Navbar() {
                 <button
                   onClick={() => setLocale("km")}
                   className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                    locale === "km" ? "bg-[#CC0000] text-white" : "bg-gray-100 text-black"
+                    locale === "km" ? "bg-[#DA291C] text-white" : "bg-gray-100 text-black"
                   }`}
                 >
                   KM
@@ -247,7 +247,7 @@ export default function Navbar() {
                     className={`block text-sm py-1 font-medium ${
                       homeActiveRoute === link.href
                         ? "text-black"
-                        : "text-black hover:text-[#CC0000]"
+                        : "text-black hover:text-[#DA291C]"
                     }`}
                   >
                     {link.label}

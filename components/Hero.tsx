@@ -42,8 +42,8 @@ export default function Hero() {
     >
       {/* Decorative background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -right-56 -top-56 h-[700px] w-[700px] rounded-full bg-[#CC0000]/[0.035]" />
-        <div className="absolute -left-32 bottom-0 h-[500px] w-[500px] rounded-full bg-[#CC0000]/[0.025]" />
+        <div className="absolute -right-56 -top-56 h-[700px] w-[700px] rounded-full bg-[#DA291C]/[0.035]" />
+        <div className="absolute -left-32 bottom-0 h-[500px] w-[500px] rounded-full bg-[#DA291C]/[0.025]" />
         <div
           className="absolute inset-0 opacity-[0.022]"
           style={{
@@ -63,10 +63,10 @@ export default function Hero() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
-              className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-[#CC0000]/20 bg-[#CC0000]/6 px-4 py-2"
+              className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-[#DA291C]/20 bg-[#DA291C]/6 px-4 py-2"
             >
-              <span className="pulse-glow h-2.5 w-2.5 rounded-full bg-[#CC0000]" />
-              <span className="text-xs font-bold uppercase tracking-[0.22em] text-[#CC0000]">
+              <span className="pulse-glow h-2.5 w-2.5 rounded-full bg-[#DA291C]" />
+              <span className="text-xs font-bold uppercase tracking-[0.22em] text-[#DA291C]">
                 {t("hero.badge")}
               </span>
             </motion.div>
@@ -75,7 +75,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.07 }}
-              className="text-4xl font-black leading-[1.06] tracking-tight text-slate-900 sm:text-5xl lg:text-[62px]"
+              className="text-4xl font-black leading-[1.06] tracking-tight text-[#222221] sm:text-5xl lg:text-[62px] uppercase"
             >
               {t("hero.title.line1")}
             </motion.h1>
@@ -84,7 +84,7 @@ export default function Hero() {
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.55, delay: 0.32, ease: "easeOut" }}
-              className="mt-5 h-0.75 w-20 origin-left rounded-full bg-[#CC0000]"
+              className="mt-5 h-0.75 w-20 origin-left rounded-full bg-[#DA291C]"
             />
 
             <motion.div
@@ -93,12 +93,12 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="mt-6 flex items-start gap-4"
             >
-              <div className="mt-1 w-0.75 shrink-0 self-stretch rounded-full bg-[#CC0000]/25" />
+              <div className="mt-1 w-0.75 shrink-0 self-stretch rounded-full bg-[#DA291C]/25" />
               <div>
-                <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.24em] text-[#CC0000]">
+                <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.24em] text-[#DA291C]">
                   {t("hero.whatIs")}
                 </p>
-                <p className="max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+                <p className="max-w-2xl text-base leading-relaxed text-[#4A4F53] sm:text-lg">
                   {t("hero.subtitle")}
                 </p>
               </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   HiGlobeAlt,
   HiHeart,
@@ -15,7 +16,7 @@ const container = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } }
 const item = { hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } };
 
 export default function AboutSection() {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
   const values = [
     {
       icon: <HiHeart className="w-6 h-6" />,
@@ -73,9 +74,9 @@ export default function AboutSection() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-100 text-[#CC0000] text-sm font-medium mb-5"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-100 text-[#DA291C] text-sm font-medium mb-5"
           >
-            <span className="w-2 h-2 rounded-full bg-[#CC0000] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-[#DA291C] animate-pulse" />
             {t("about.hero.badge")}
           </motion.div>
 
@@ -83,16 +84,16 @@ export default function AboutSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6"
+            className="text-4xl sm:text-5xl font-extrabold text-[#222221] mb-6 uppercase tracking-wide"
           >
-            {t("about.hero.title.before")} <span className="text-[#CC0000]">{t("about.hero.title.accent")}</span>
+            {t("about.hero.title.before")} <span className="text-[#DA291C]">{t("about.hero.title.accent")}</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-gray-500 leading-relaxed"
+            className="text-lg text-[#4A4F53] leading-relaxed"
           >
             {t("about.hero.subtitle")}
           </motion.p>
@@ -108,11 +109,11 @@ export default function AboutSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-5">{t("about.mission.title")}</h2>
-            <p className="text-gray-500 leading-relaxed mb-5">
+            <h2 className="text-3xl font-bold text-[#222221] mb-5 uppercase tracking-wide">{t("about.mission.title")}</h2>
+            <p className="text-[#4A4F53] leading-relaxed mb-5">
               {t("about.mission.p1")}
             </p>
-            <p className="text-gray-500 leading-relaxed mb-8">
+            <p className="text-[#4A4F53] leading-relaxed mb-8">
               {t("about.mission.p2")}
             </p>
 
@@ -123,7 +124,7 @@ export default function AboutSection() {
                 { n: "45+", l: t("about.stats.communities") },
               ].map((s) => (
                 <div key={s.l} className="text-center">
-                  <p className="text-2xl font-extrabold text-[#CC0000]">{s.n}</p>
+                  <p className="text-2xl font-extrabold text-[#DA291C]">{s.n}</p>
                   <p className="text-xs text-gray-500 mt-0.5">{s.l}</p>
                 </div>
               ))}
@@ -137,14 +138,61 @@ export default function AboutSection() {
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            <div className="rounded-3xl bg-linear-to-br from-[#CC0000] to-orange-500 p-8 text-white relative overflow-hidden">
+            <div className="rounded-3xl bg-linear-to-br from-[#DA291C] to-[#A51414] p-8 text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl animate-blob" />
-              <p className="text-5xl mb-4">🌏</p>
-              <h3 className="text-2xl font-bold mb-3">{t("about.card.title")}</h3>
+              <div className="mb-4">
+                <Image
+                  src="/image/about.png"
+                  alt="Save the Children"
+                  width={160}
+                  height={60}
+                  className="object-contain brightness-0 invert"
+                />
+              </div>
               <p className="text-red-100 text-sm leading-relaxed">
                 {t("about.card.body")}
               </p>
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Values */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#F3F2EE]">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <div className="w-10 h-1 bg-[#DA291C] mx-auto mb-4" />
+            <h2 className="text-3xl font-bold text-[#222221] mb-2 uppercase tracking-wide">{t("about.values.heading")}</h2>
+            <p className="text-[#4A4F53]">{t("about.values.subtitle")}</p>
+          </motion.div>
+
+          <motion.div
+            key={locale}
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {values.map((v) => (
+              <motion.div
+                key={v.title}
+                variants={item}
+                whileHover={{ y: -4, boxShadow: "0 12px 30px rgba(0,0,0,0.07)" }}
+                className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm"
+              >
+                <div className="w-10 h-10 rounded-xl bg-red-50 text-[#DA291C] flex items-center justify-center mb-4">
+                  {v.icon}
+                </div>
+                <h3 className="text-base font-bold text-[#222221] mb-2">{v.title}</h3>
+                <p className="text-sm text-[#4A4F53] leading-relaxed">{v.desc}</p>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </section>
@@ -156,7 +204,7 @@ export default function AboutSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl font-bold text-gray-900 mb-12 text-center"
+            className="text-3xl font-bold text-[#222221] mb-12 text-center uppercase tracking-wide"
           >
             {t("about.timeline.heading")}
           </motion.h2>
@@ -173,7 +221,7 @@ export default function AboutSection() {
                 transition={{ delay: i * 0.1, duration: 0.45 }}
                 className="relative flex gap-6 mb-8 pl-20"
               >
-                <div className="absolute left-0 w-16 h-16 rounded-2xl bg-[#CC0000] flex items-center justify-center shadow-md shadow-red-200">
+                <div className="absolute left-0 w-16 h-16 rounded-2xl bg-[#DA291C] flex items-center justify-center shadow-md shadow-red-200">
                   <span className="text-white font-extrabold text-sm">{m.year}</span>
                 </div>
                 <div className="bg-gray-50 rounded-xl px-5 py-4 flex-1 border border-gray-100">
