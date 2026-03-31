@@ -61,7 +61,7 @@ export default function AboutSection() {
   return (
     <>
       {/* Mission */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}

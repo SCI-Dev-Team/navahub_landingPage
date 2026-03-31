@@ -27,8 +27,8 @@ export default function Navbar() {
       href: isHome ? "#events-announcement" : "/#events-announcement",
     },
     { label: t("nav.projects"), href: isHome ? "#projects" : "/projects" },
-    { label: t("nav.about"), href: isHome ? "#about" : "/about" },
-    { label: t("nav.contact"), href: isHome ? "#contact" : "/contact" },
+    { label: t("nav.about"), href: isHome ? "#about" : "/#about" },
+    { label: t("nav.contact"), href: isHome ? "#contact" : "/#contact" },
   ];
 
   useEffect(() => {

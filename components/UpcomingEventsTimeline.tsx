@@ -35,9 +35,6 @@ export default function UpcomingEventsTimeline({
       <div className="mb-8">
         {/* Red top rule — brand holding device */}
         <div className="w-10 h-1 bg-[#DA291C] mb-3" />
-        <p className="text-[11px] sm:text-xs uppercase tracking-[0.24em] text-[#DA291C] mb-2 font-semibold">
-          {t("events.heading")}
-        </p>
         <p className="text-sm sm:text-base text-[#4A4F53] max-w-2xl">
           {t("events.subtitle")}
         </p>
