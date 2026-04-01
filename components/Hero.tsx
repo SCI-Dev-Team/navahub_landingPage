@@ -63,19 +63,19 @@ export default function Hero() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
-              className="mb-6 inline-flex items-center gap-3 bg-[#DA291C] px-5 py-3"
+              className="mb-6 inline-flex items-center gap-4"
             >
+              <span className="rounded-full bg-[#DA291C] px-5 py-2.5 text-sm font-semibold tracking-wide text-white shadow-sm sm:text-base">
+                {t("hero.badge")}
+              </span>
               <Image
                 src="/image/saveLogo.png"
                 alt="Save the Children Cambodia"
-                width={22}
-                height={22}
-                className="h-[22px] w-[22px] object-contain brightness-0 invert"
+                width={56}
+                height={56}
+                className="h-12 w-12 object-contain sm:h-14 sm:w-14"
                 priority
               />
-              <span className="text-base font-medium text-white">
-                {t("hero.badge")}
-              </span>
             </motion.div>
 
             <motion.h1

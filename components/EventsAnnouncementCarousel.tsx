@@ -12,9 +12,16 @@ type Props = {
   t: (key: string) => string;
 };
 
+function shouldDisableImageOptimization(src: string | undefined) {
+  if (!src) return false;
+  // For any remote URL, avoid server-side optimization fetches (many CDNs block them with 403).
+  return /^https?:\/\//i.test(src);
+}
+
 export default function EventsAnnouncementCarousel({ events, t }: Props) {
   const [eventIndex, setEventIndex] = useState(0);
   const featuredEvent = events[eventIndex] ?? events[0];
+  const disableOptimization = shouldDisableImageOptimization(featuredEvent?.image);
   const safeTotal = Math.max(events.length, 1);
   const indexLabel = String(eventIndex + 1).padStart(2, "0");
   const totalLabel = String(safeTotal).padStart(2, "0");
@@ -194,6 +201,8 @@ export default function EventsAnnouncementCarousel({ events, t }: Props) {
                     priority
                     className="object-cover"
                     sizes="(min-width: 1024px) 48vw, 100vw"
+                    unoptimized={disableOptimization}
+                    referrerPolicy="no-referrer"
                   />
                   {/* Subtle left-edge fade on desktop */}
                   <div className="absolute inset-y-0 left-0 hidden w-10 bg-gradient-to-r from-white to-transparent lg:block" />
