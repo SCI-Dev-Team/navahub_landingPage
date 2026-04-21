@@ -20,8 +20,12 @@ export type AdminEntry = {
   values: Record<string, unknown>;
 };
 
-const CONTENT_CACHE_TTL_MS = 600_000; // 10 minutes
-const CONTENT_CACHE_KEY_PREFIX = "navahub:content:";
+// Short in-memory cache so components sharing the same payload (Hero, ProjectRows, ...)
+// don't each issue their own Firestore request when they mount together.
+// We intentionally do NOT persist to localStorage: stale content would keep showing
+// on visitors' machines for the full TTL after an admin edit.
+const CONTENT_CACHE_TTL_MS = 15_000;
+const LEGACY_CONTENT_CACHE_KEY_PREFIX = "navahub:content:";
 
 type ContentCacheEntry = {
   data: ContentPayload;
@@ -31,56 +35,32 @@ type ContentCacheEntry = {
 const contentCache = new Map<Locale, ContentCacheEntry>();
 const inFlightContentRequests = new Map<Locale, Promise<ContentPayload>>();
 
-function cacheKeyForLocale(locale: Locale) {
-  return `${CONTENT_CACHE_KEY_PREFIX}${locale}`;
-}
-
 function hasWindowStorage() {
   return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
 }
 
-function readContentCacheFromStorage(locale: Locale): ContentPayload | null {
-  if (!hasWindowStorage()) return null;
-
+function clearLegacyStorageCache() {
+  if (!hasWindowStorage()) return;
   try {
-    const raw = window.localStorage.getItem(cacheKeyForLocale(locale));
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as ContentCacheEntry;
-    if (!parsed?.data || typeof parsed.expiresAt !== "number") return null;
-    if (parsed.expiresAt <= Date.now()) {
-      window.localStorage.removeItem(cacheKeyForLocale(locale));
-      return null;
+    for (const locale of ["en", "km"] as const) {
+      window.localStorage.removeItem(`${LEGACY_CONTENT_CACHE_KEY_PREFIX}${locale}`);
     }
-    return parsed.data;
   } catch {
-    return null;
+    // Ignore storage failures (private mode / quota)
   }
 }
 
 function writeContentCache(locale: Locale, data: ContentPayload) {
-  const entry: ContentCacheEntry = {
+  contentCache.set(locale, {
     data,
     expiresAt: Date.now() + CONTENT_CACHE_TTL_MS,
-  };
-
-  contentCache.set(locale, entry);
-  if (!hasWindowStorage()) return;
-
-  try {
-    window.localStorage.setItem(cacheKeyForLocale(locale), JSON.stringify(entry));
-  } catch {
-    // Ignore storage write failures (private mode / quota)
-  }
+  });
 }
 
 function invalidateContentCache() {
   contentCache.clear();
   inFlightContentRequests.clear();
-  if (!hasWindowStorage()) return;
-
-  for (const locale of ["en", "km"] as const) {
-    window.localStorage.removeItem(cacheKeyForLocale(locale));
-  }
+  clearLegacyStorageCache();
 }
 
 function compareById(a: { id?: number }, b: { id?: number }) {
@@ -88,22 +68,15 @@ function compareById(a: { id?: number }, b: { id?: number }) {
 }
 
 export async function fetchContent(locale: Locale): Promise<ContentPayload> {
+  // Clean up any stale entries written by previous versions of this module.
+  clearLegacyStorageCache();
+
   const cached = contentCache.get(locale);
   if (cached && cached.expiresAt > Date.now()) {
     return {
       ...cached.data,
       upcomingEvents: [...cached.data.upcomingEvents].sort(compareUpcomingEventsByDate),
     };
-  }
-
-  const storageCached = readContentCacheFromStorage(locale);
-  if (storageCached) {
-    const sorted: ContentPayload = {
-      ...storageCached,
-      upcomingEvents: [...storageCached.upcomingEvents].sort(compareUpcomingEventsByDate),
-    };
-    writeContentCache(locale, sorted);
-    return sorted;
   }
 
   const activeRequest = inFlightContentRequests.get(locale);
