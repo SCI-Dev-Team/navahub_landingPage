@@ -276,6 +276,17 @@ export default function AdminDashboardPage() {
                   );
                 })}
               </div>
+
+              <div className="mt-6 border-t border-neutral-200 pt-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-2">Tools</p>
+                <button
+                  type="button"
+                  onClick={() => router.push("/admin/dashboard/forms")}
+                  className="w-full rounded-xl border border-neutral-200 bg-white px-3 py-2.5 text-left text-sm font-medium text-neutral-700 hover:border-neutral-300 hover:bg-neutral-50 transition"
+                >
+                  📋 Form Builder
+                </button>
+              </div>
             </aside>
 
             {/* Main */}

@@ -11,12 +11,14 @@ type SiteChromeProps = {
 export default function SiteChrome({ children }: SiteChromeProps) {
   const pathname = usePathname();
   const isAdminPage = pathname.startsWith("/admin");
+  const isRegisterPage = pathname.startsWith("/register");
+  const hideChrome = isAdminPage || isRegisterPage;
 
   return (
     <>
-      {!isAdminPage ? <Navbar /> : null}
+      {!hideChrome ? <Navbar /> : null}
       <div className="flex-1">{children}</div>
-      {!isAdminPage ? <Footer /> : null}
+      {!hideChrome ? <Footer /> : null}
     </>
   );
 }

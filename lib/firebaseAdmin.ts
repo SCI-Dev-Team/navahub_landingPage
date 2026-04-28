@@ -1,5 +1,6 @@
 import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
+import { getAuth } from "firebase-admin/auth";
 
 function getRequiredEnv(name: string): string {
   const value = process.env[name];
@@ -25,4 +26,26 @@ function getFirebaseAdminApp() {
 
 export function getAdminDb() {
   return getFirestore(getFirebaseAdminApp());
+}
+
+export function getAdminAuth() {
+  return getAuth(getFirebaseAdminApp());
+}
+
+/**
+ * Verify an "Authorization: Bearer <token>" header.
+ * Returns the decoded UID on success, or throws with an HTTP-friendly message.
+ */
+export async function requireAdminToken(request: Request): Promise<string> {
+  const authHeader = request.headers.get("Authorization") ?? "";
+  if (!authHeader.startsWith("Bearer ")) {
+    throw Object.assign(new Error("Missing or invalid authorization token."), { status: 401 });
+  }
+  const token = authHeader.slice(7);
+  try {
+    const decoded = await getAdminAuth().verifyIdToken(token);
+    return decoded.uid;
+  } catch {
+    throw Object.assign(new Error("Unauthorized: token verification failed."), { status: 401 });
+  }
 }
